@@ -1,0 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.navbarLinks {
+  color: white;
+  text-decoration: none;
+}
+
+.spinner {
+  color: blueviolet;
+  font-size: 40;
+}

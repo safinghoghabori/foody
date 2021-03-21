@@ -1,0 +1,43 @@
+.header-area {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 15px;
+}
+.cover-img {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  height: 70vh;
+}
+.cover-img img {
+  width: 100%;
+  height: 100%;
+}
+
+@media screen and (max-width: 1100px) {
+  .header-area {
+    width: 50%;
+  }
+}
+
+.introduction {
+  flex: 1;
+}
+.paragraph {
+  width: 450px;
+  font-size: 14.5;
+  line-height: 20px;
+}
+.textOne {
+  font-size: 64;
+  font-weight: 600;
+}
+.textSecond {
+  color: #86b2f3;
+  font-size: 64;
+  font-weight: bold;
+  margin-top: -30;
+  margin-bottom: 20;
+}
