@@ -41,19 +41,19 @@ const useStyles = makeStyles((theme) => ({
   details: {
     display: "flex",
     flexDirection: "column",
+    width: "50%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   content: {
     flex: "1 0 auto",
   },
   cover: {
-    width: 151,
+    width: "100%",
     height: 200,
   },
   controls: {
-    display: "flex",
-    alignItems: "center",
-    paddingLeft: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    marginBottom: "20px",
   },
   playIcon: {
     height: 38,
@@ -62,7 +62,6 @@ const useStyles = makeStyles((theme) => ({
   search: {
     margin: "50px",
     marginLeft: "100px",
-    width: "100%",
   },
   link: {
     textDecoration: "none",
@@ -70,6 +69,41 @@ const useStyles = makeStyles((theme) => ({
   spinnerStyles: {
     color: "red",
     fontSize: 40,
+  },
+
+  imageArea: {
+    marginTop: "35px",
+    height: "100%",
+    width: "100%",
+    [theme.breakpoints.down("xs")]: {
+      width: "50%",
+      textAlign: "center",
+    },
+  },
+  restDetails: {
+    marginTop: "100px",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "10px",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+  },
+  cardImg: {
+    height: "100%",
+    width: "50%",
+  },
+  cardItemsArea: {
+    width: "90%",
+    margin: "0 auto",
+  },
+  headerImg: {
+    height: "100%",
+    width: "100%",
+    [theme.breakpoints.down("xs")]: {
+      width: "80%",
+    },
   },
 }));
 
@@ -131,19 +165,24 @@ function Restaurant() {
           <>
             <Grid container>
               <Grid item xs={false} sm={1} />
-              <Grid item xs={12} sm={6} style={{ marginTop: 120 }}>
+              <Grid item xs={12} sm={6} className={classes.restDetails}>
                 <Typography
                   variant="h3"
                   component="h2"
-                  style={{ fontStyle: "bold" }}
+                  style={{ fontStyle: "bold", textTransform: "capitalize" }}
                   color="textPrimary"
                 >
                   {restaurantUser.restaurantname}
                 </Typography>
 
-                <Typography variant="h6" color="textPrimary">
+                <Typography
+                  variant="h6"
+                  color="textPrimary"
+                  style={{ textTransform: "capitalize" }}
+                >
                   {restaurantUser.tags}
                 </Typography>
+                <br />
                 <Typography variant="body2" color="textPrimary">
                   Adress: {restaurantUser.address}
                 </Typography>
@@ -160,66 +199,67 @@ function Restaurant() {
                   Phone: {restaurantUser.phoneno}
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={4} style={{ marginTop: 34 }}>
-                <img src={`/${restaurantUser.image}`} style={{ height: 500, width: 500 }} />
+              <Grid item xs={12} sm={4} className={classes.imageArea}>
+                <img src={`/${restaurantUser.image}`} className={classes.headerImg} />
               </Grid>
               <Grid item xs={false} sm={1} />
             </Grid>
-            <Grid container>
-              <div className={classes.search}>
-                <SearchBar handleSearch={handleSearch} />
-              </div>
-            </Grid>
+            <div className={classes.search}>
+              <SearchBar handleSearch={handleSearch} />
+            </div>
 
-            <Grid container spacing={2} style={{ maarginTop: 100 }}>
-              {filteredItemsState &&
-                filteredItemsState.map((item) => (
-                  <Grid item container xs={12} sm={6} md={4} justify="center">
-                    <Card className={classes.cardRoot}>
-                      <div className={classes.details}>
-                        <CardContent className={classes.content}>
-                          <Typography component="h5" variant="h5">
-                            {item.title}
-                          </Typography>
-                          <Typography variant="subtitle1" color="textSecondary">
-                            Rs. {item.price}
-                          </Typography>
-                          <Typography variant="subtitle1" color="textSecondary">
-                            {item.description}
-                          </Typography>
-                        </CardContent>
-                        <div className={classes.controls}>
-                          {userLogin ? (
-                            <Button
-                              variant="contained"
-                              style={{ background: "#3f51b5", color: "white" }}
-                              onClick={() => {
-                                handleAddToCart(item._id);
-                              }}
-                            >
-                              Add to Cart
-                            </Button>
-                          ) : (
-                            <Link to="/userSignin" className={classes.link}>
+            <div className={classes.cardItemsArea}>
+              <Grid container spacing={2} style={{ marginTop: 40 }}>
+                {filteredItemsState &&
+                  filteredItemsState.map((item) => (
+                    <Grid item container xs={12} sm={6} md={4} justify="center">
+                      <Card className={classes.cardRoot}>
+                        <div className={classes.details}>
+                          <CardContent className={classes.content}>
+                            <Typography component="h5" variant="h5">
+                              {item.title}
+                            </Typography>
+                            <Typography variant="subtitle1" color="textSecondary">
+                              Rs. {item.price}
+                            </Typography>
+                            <Typography variant="subtitle1" color="textSecondary">
+                              {item.description}
+                            </Typography>
+                          </CardContent>
+                          <div className={classes.controls}>
+                            {userLogin ? (
                               <Button
                                 variant="contained"
                                 style={{ background: "#3f51b5", color: "white" }}
+                                onClick={() => {
+                                  handleAddToCart(item._id);
+                                }}
                               >
                                 Add to Cart
                               </Button>
-                            </Link>
-                          )}
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            ) : (
+                              <Link to="/userSignin" className={classes.link}>
+                                <Button
+                                  variant="contained"
+                                  style={{ background: "#3f51b5", color: "white" }}
+                                >
+                                  Add to Cart
+                                </Button>
+                              </Link>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                      <img
-                        src={`http://localhost:5000/${item.image.replace(/\\/g, "/")}`}
-                        className={classes.cover}
-                      />
-                    </Card>
-                  </Grid>
-                ))}
-            </Grid>
+                        <div className={classes.cardImg}>
+                          <img
+                            src={`http://localhost:5000/${item.image.replace(/\\/g, "/")}`}
+                            className={classes.cover}
+                          />
+                        </div>
+                      </Card>
+                    </Grid>
+                  ))}
+              </Grid>
+            </div>
           </>
         )
       )}

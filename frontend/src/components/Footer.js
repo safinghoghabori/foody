@@ -51,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
     padding: "8px 0 0 0",
     fontWeight: "500",
   },
+  footerLink: {
+    textDecoration: "none",
+  },
 }));
 
 export default function Footer() {
@@ -115,8 +118,14 @@ export default function Footer() {
       </Grid>
       <Grid container>
         <div className={classes.footerAttr}>
-          This site is made with ❤ by <a href="!#">Safin Ghoghabori</a> &{" "}
-          <a href="!#">Mitesh Kukadeja</a>{" "}
+          This site is made with ❤ by{" "}
+          <a href="!#" className={classes.footerLink}>
+            Safin Ghoghabori
+          </a>{" "}
+          &{" "}
+          <a href="!#" className={classes.footerLink}>
+            Mitesh Kukadeja
+          </a>{" "}
         </div>
       </Grid>
     </>
