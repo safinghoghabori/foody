@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     color: "#ffffff",
     textAlign: "center",
   },
+  odId: {
+    lineBreak: "anywhere",
+  },
 }));
 
 function OrderCard(props) {
@@ -39,7 +42,7 @@ function OrderCard(props) {
       elevation={4}
     >
       <div style={{ marginLeft: 10, marginRight: 10 }}>
-        <Typography variant="body1" color="textSecondary">
+        <Typography variant="body1" color="textSecondary" className={classes.odId}>
           OrderId - #{order._id}
         </Typography>
         <Divider />

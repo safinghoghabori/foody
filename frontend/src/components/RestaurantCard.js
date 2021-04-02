@@ -17,6 +17,9 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 
+//react-spinner
+import HashLoader from "react-spinners/HashLoader";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 30,
@@ -41,10 +44,11 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: "none",
+    width: "100%",
   },
-  // btn: {
-  //   width: "160%",
-  // },
+  btn: {
+    width: "100%",
+  },
   capitalize: {
     textTransform: "capitalize",
     fontSize: "2rem",
@@ -56,6 +60,12 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       padding: 0,
     },
+  },
+  spinner: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "15%",
   },
 }));
 
@@ -83,7 +93,9 @@ function RestaurantCard(props) {
         xs={12}
       >
         {loading ? (
-          <h1>Loading...</h1>
+          <div className={classes.spinner}>
+            <HashLoader size={80} color="#3f51b5" />
+          </div>
         ) : (
           rests.map((rest) => (
             <Grid item className={classes.cardGrid}>
@@ -104,17 +116,15 @@ function RestaurantCard(props) {
                   </Typography>
                 </CardContent>
                 <Divider />
-                <CardActions>
-                  <Link to={`/restaurant/${rest._id}`} className={classes.link}>
-                    <Button
-                      variant="contained"
-                      style={{ background: "#3f51b5", color: "white" }}
-                      className={classes.btn}
-                    >
-                      ORDER ONLINE
-                    </Button>
-                  </Link>
-                </CardActions>
+                <Link to={`/restaurant/${rest._id}`} className={classes.link}>
+                  <Button
+                    variant="contained"
+                    style={{ background: "rgb(67 96 138)", color: "white" }}
+                    className={classes.btn}
+                  >
+                    ORDER ONLINE
+                  </Button>
+                </Link>
               </Card>
             </Grid>
           ))

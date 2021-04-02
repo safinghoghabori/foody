@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addItem, fetchRestaurant } from "../redux/actions/sellerAction";
+import { addItem, fetchRestaurant, fetchRestaurantSeller } from "../redux/actions/sellerAction";
 import SearchBar from "./SearchBar";
 import ItemDialog from "./ItemDialog";
 
 //toast
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+//react-spinner
+import HashLoader from "react-spinners/HashLoader";
 
 //Material-ui
 import Grid from "@material-ui/core/Grid";
@@ -31,7 +34,13 @@ const useStyles = makeStyles((theme) => ({
   search: {
     margin: "50px",
     marginLeft: "100px",
-    width: "100%",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "50px",
+      marginBottom: "50px",
+      textAlign: "center",
+      width: "100%",
+      transform: "translateX(-103px)",
+    },
   },
   link: {
     textDecoration: "none",
@@ -39,6 +48,42 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: 50,
     width: "50%",
+  },
+  imageArea: {
+    marginTop: "35px",
+    height: "100%",
+    width: "100%",
+    [theme.breakpoints.down("xs")]: {
+      width: "50%",
+      textAlign: "center",
+    },
+  },
+  restDetails: {
+    marginTop: "100px",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "10px",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+  },
+  cardItemsArea: {
+    width: "90%",
+    margin: "0 auto",
+  },
+  headerImg: {
+    height: "475px",
+    width: "100%",
+    [theme.breakpoints.down("xs")]: {
+      width: "80%",
+    },
+  },
+  spinner: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "15%",
   },
 }));
 
@@ -56,11 +101,14 @@ function SellerDashboard() {
 
   const dispatch = useDispatch();
   const { error, restaurant, loading, items } = useSelector((state) => state.seller);
+
+  console.log("items...", items);
+
   // const { items } = restaurant; //destructuring object(to get items array)
   const restId = restaurant._id;
 
   useEffect(() => {
-    dispatch(fetchRestaurant(restId));
+    dispatch(fetchRestaurantSeller(restId));
   }, []);
 
   useEffect(() => {
@@ -71,6 +119,8 @@ function SellerDashboard() {
   }, [items]);
   const [itemsState, setItemsState] = useState(items ? [] : null);
   const [filteredItemsState, setFilteredItemsState] = useState(items ? [] : null);
+
+  console.log("filteredItemsState...", filteredItemsState);
 
   const handleInputChange = (e) => {
     setEditItemData({
@@ -103,9 +153,10 @@ function SellerDashboard() {
       return toast.error(`All fields are required...!`, { position: "bottom-right" });
     }
 
+    console.log("error...", error);
+
     if (error) {
-      console.log("inside error condition...");
-      dispatch({ type: CLEAR_SELLER_ERROR });
+      // dispatch({ type: CLEAR_SELLER_ERROR });
       return toast.error(`${error}...!`, { position: "bottom-right" });
     }
 
@@ -146,22 +197,28 @@ function SellerDashboard() {
   return (
     <>
       {loading ? (
-        <h1>Loading...</h1>
+        <div className={classes.spinner}>
+          <HashLoader size={80} color="#3f51b5" />
+        </div>
       ) : (
         restaurant && (
           <>
             <Grid container>
               <Grid item xs={false} sm={1} />
-              <Grid item xs={12} sm={6} style={{ marginTop: 120 }}>
+              <Grid item xs={12} sm={6} className={classes.restDetails}>
                 <Typography
                   variant="h3"
                   component="h2"
-                  style={{ fontStyle: "bold" }}
+                  style={{ fontStyle: "bold", textTransform: "capitalize" }}
                   color="textPrimary"
                 >
                   {restaurant.restaurantname}
                 </Typography>
-                <Typography variant="h6" color="textPrimary">
+                <Typography
+                  variant="h6"
+                  color="textPrimary"
+                  style={{ textTransform: "capitalize" }}
+                >
                   {restaurant.tags}
                 </Typography>{" "}
                 <br />
@@ -181,38 +238,39 @@ function SellerDashboard() {
                   Phone: {restaurant.phoneno}
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={4} style={{ marginTop: 34 }}>
-                <img src={`/${restaurant.image}`} style={{ height: 500, width: 500 }} />
+              <Grid item xs={12} sm={4} className={classes.imageArea}>
+                <img src={`/${restaurant.image}`} className={classes.headerImg} />
               </Grid>
               <Grid item xs={false} sm={1} />
             </Grid>
-            <Grid container>
-              <div className={classes.search}>
-                <SearchBar handleSearch={handleSearch} />
+            <div className={classes.search}>
+              <SearchBar handleSearch={handleSearch} />
+            </div>
+
+            <div className={classes.cardItemsArea}>
+              <Grid container spacing={2} style={{ marginTop: 40 }}>
+                {filteredItemsState && filteredItemsState.map((item) => <ItemCard {...item} />)}
+              </Grid>
+              {/* Edit item dialog */}
+              <ItemDialog
+                open={open}
+                handleClose={handleClose}
+                handleSubmit={handleSubmit}
+                handleImage={handleImage}
+                editItemData={editItemData}
+                handleInputChange={handleInputChange}
+              />
+              <div style={{ textAlign: "center" }}>
+                <Button
+                  fullWidth
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                  onClick={handleOpen}
+                >
+                  Add Item
+                </Button>
               </div>
-            </Grid>
-            <Grid container spacing={2} style={{ maarginTop: 100 }}>
-              {filteredItemsState && filteredItemsState.map((item) => <ItemCard {...item} />)}
-            </Grid>
-            {/* Edit item dialog */}
-            <ItemDialog
-              open={open}
-              handleClose={handleClose}
-              handleSubmit={handleSubmit}
-              handleImage={handleImage}
-              editItemData={editItemData}
-              handleInputChange={handleInputChange}
-            />
-            <div style={{ textAlign: "center" }}>
-              <Button
-                fullWidth
-                className={classes.button}
-                variant="contained"
-                color="primary"
-                onClick={handleOpen}
-              >
-                Add Item
-              </Button>
             </div>
           </>
         )

@@ -17,6 +17,13 @@ import { addToCart, deleteCartItem, reduceCartItem } from "../redux/actions/user
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    width: "100%",
+    height: "184px",
+    [theme.breakpoints.down("sm")]: {
+      width: "350px",
+      height: "184px",
+      margin: "15px auto",
+    },
   },
   details: {
     display: "flex",
@@ -28,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
   },
   itemTotal: {
-    marginTop: "13px",
+    marginTop: "5px",
   },
   imgCover: { height: 184, width: 270 },
 }));
@@ -70,7 +77,7 @@ function CartItem(props) {
             <Typography component="h5" variant="h5">
               {title}
             </Typography>
-            <Typography variant="subtitle1" color="textSecondary" noWrap>
+            <Typography variant="subtitle1" color="textSecondary">
               {description}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">

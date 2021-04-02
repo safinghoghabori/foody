@@ -56,6 +56,26 @@ export const fetchRestaurant = (restId) => (dispatch) => {
     });
 };
 
+export const fetchRestaurantSeller = (restId) => (dispatch) => {
+  dispatch({ type: LOADING_SELLER_UI });
+
+  axios
+    .get(`/restaurant/${restId}`)
+    .then((res) => {
+      dispatch({
+        type: SET_RESTAURANT,
+        payload: res.data,
+      });
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+      dispatch({
+        type: SET_RESTAURANT,
+        payload: {},
+      });
+    });
+};
+
 export const signupSeller = (newSellerData, history) => (dispatch) => {
   dispatch({ type: CLEAR_SELLER_ERROR });
   dispatch({ type: LOADING_SELLER_UI });
@@ -117,7 +137,6 @@ export const addItem = (itemData, restId) => (dispatch) => {
   axios
     .post(`/create-item/${restId}`, itemData)
     .then((res) => {
-      console.log("here it comes...");
       dispatch({
         type: ADD_ITEM,
         payload: res.data.item,
@@ -127,6 +146,7 @@ export const addItem = (itemData, restId) => (dispatch) => {
     .catch((error) => {
       console.log("error...", error.response);
       if (error.response) {
+        console.log("yes it comes...");
         dispatch({
           type: SET_SELLER_ERROR,
           payload: error.response.data.error,

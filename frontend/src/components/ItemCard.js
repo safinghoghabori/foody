@@ -23,7 +23,7 @@ import "react-toastify/dist/ReactToastify.css";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    width: 700,
+    width: 328,
     height: 200,
   },
   details: {
@@ -35,8 +35,12 @@ const useStyles = makeStyles((theme) => ({
   },
 
   cover: {
-    width: 200,
+    width: "100%",
     height: 200,
+  },
+  cardImg: {
+    height: "100%",
+    width: "50%",
   },
   controls: {
     display: "flex",
@@ -146,7 +150,9 @@ function ItemCart(props) {
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
           </div>
-          <img src={finalImageUrl} className={classes.cover} />
+          <div className={classes.cardImg}>
+            <img src={finalImageUrl} className={classes.cover} />
+          </div>
         </Card>
       </Grid>
 

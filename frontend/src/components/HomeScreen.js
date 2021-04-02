@@ -4,6 +4,7 @@ import cover from "../images/food_img.jpg";
 import cover2 from "../images/food_img2.png";
 import RestaurantCard from "./RestaurantCard";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import "../styles/header.css";
 
 //material-ui
@@ -11,6 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { Container } from "@material-ui/core";
+import { HistorySharp } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   headerArea: {
@@ -120,11 +122,15 @@ const useStyles = makeStyles((theme) => ({
 
 function HomeScreen() {
   const classes = useStyles();
+  const history = useHistory();
 
-  const { restaurants } = useSelector((state) => state.seller);
+  const { restaurants, sellerLogin } = useSelector((state) => state.seller);
 
   const [restaurantsState, setRestaurantsState] = useState(restaurants ? [] : null);
   const [filteredRestsState, setFilteredRestsState] = useState(restaurants ? [] : null);
+
+  //redirect seller
+  if (sellerLogin) history.push("/seller/dashboard");
 
   useEffect(() => {
     setRestaurantsState(restaurants);

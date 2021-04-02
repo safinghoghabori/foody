@@ -22,7 +22,7 @@ export const signupUser = (newUserData, history) => (dispatch) => {
         type: USER_SIGNUP_SUCCESS,
       });
       dispatch({ type: CLEAR_USER_ERROR });
-      history.push("/userLogin");
+      history.push("/userSignin");
     })
     .catch((error) => {
       console.log(error.response.data);
@@ -85,6 +85,7 @@ export const addToCart = (userId, itemId) => (dispatch) => {
 };
 
 export const getCart = (userId) => (dispatch) => {
+  console.log("userId...", userId);
   axios
     .get(`/get-cart-items/${userId}`)
     .then((res) => {

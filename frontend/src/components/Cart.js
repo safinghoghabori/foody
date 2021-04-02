@@ -17,12 +17,22 @@ import IconButton from "@material-ui/core/IconButton";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+//react-spinner
+import HashLoader from "react-spinners/HashLoader";
+
 const useStyles = makeStyles((theme) => ({
   ...theme.spreadThis,
   title: {
     margin: "40px 0px 20px 128px",
     display: "inline-block",
     marginRight: "40%",
+
+    [theme.breakpoints.down("sm")]: {
+      display: "block",
+      width: "100%",
+      margin: "20px auto",
+      textAlign: "center",
+    },
   },
   spaceTypo: {
     display: "flex",
@@ -44,6 +54,26 @@ const useStyles = makeStyles((theme) => ({
     "&:disabled": {
       color: "#bfbfbf",
     },
+  },
+  summaryInfo: {
+    [theme.breakpoints.down("sm")]: {
+      display: "block",
+      margin: "0 auto",
+    },
+  },
+  cardItems: {
+    display: "block",
+    marginRight: "30px",
+    width: "100%",
+    [theme.breakpoints.down("xs")]: {
+      margin: "0 auto",
+    },
+  },
+  spinner: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "15%",
   },
 }));
 
@@ -104,7 +134,9 @@ function Cart() {
   return (
     <>
       {loading ? (
-        <h1>Loading...</h1>
+        <div className={classes.spinner}>
+          <HashLoader size={80} color="#3f51b5" />
+        </div>
       ) : (
         <>
           <Typography variant="h5" className={classes.title}>
@@ -116,9 +148,9 @@ function Cart() {
               <KeyboardBackspaceIcon onClick={prevStep} />
             </IconButton>
           )}
-          <Grid container direction="row" spacing={2}>
+          <Grid container direction="row">
             <Grid item sm={1} />
-            <Grid item sm={7}>
+            <Grid item sm={7} className={classes.cardItems}>
               {cartPresent &&
                 step === 1 &&
                 cart.map((item) => <CartItem {...item} key={item.item._id} />)}
@@ -190,11 +222,11 @@ function Cart() {
                 </form>
               )}
             </Grid>
-            <Grid item sm={3}>
+            <Grid item sm={3} className={classes.summaryInfo}>
               <Paper className={classes.paper} style={{ backgroundColor: "#faf7f7" }} elevation={4}>
                 <div style={{ marginLeft: 20, marginRight: 20 }}>
                   <br />
-                  <Typography gutterBottom variant="h5" noWrap>
+                  <Typography gutterBottom variant="h5">
                     {step === 1 && "Total Amount"}
                     {step === 2 && "Order Summary"}
 
@@ -232,7 +264,7 @@ function Cart() {
                       );
                     })}
                   <hr />
-                  <Typography gutterBottom variant="h5" noWrap>
+                  <Typography gutterBottom variant="h5">
                     <div className={classes.spaceTypo}>
                       <span>Grand Total</span>
                       <span>Rs. {price + deliveryCharge}</span>

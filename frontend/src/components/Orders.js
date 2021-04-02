@@ -9,6 +9,9 @@ import Grid from "@material-ui/core/Grid";
 import { getOrders } from "../redux/actions/userActions";
 import { getOrdersForSeller } from "../redux/actions/sellerAction";
 
+//react-spinner
+import HashLoader from "react-spinners/HashLoader";
+
 const useStyles = makeStyles((theme) => ({
   ...theme.spreadThis,
   para: {
@@ -16,9 +19,24 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "32%",
   },
   title: {
-    margin: "10px 0px 10px 130px",
+    margin: "26px 0px 26px 130px",
     display: "inline-block",
-    marginRight: "40%",
+    [theme.breakpoints.down("sm")]: {
+      display: "block",
+      textAlign: "center",
+      margin: "26px 0",
+    },
+  },
+  ordercard: {
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: 20,
+    },
+  },
+  spinner: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "15%",
   },
 }));
 
@@ -26,7 +44,7 @@ function Orders() {
   const classes = useStyles();
 
   const dispatch = useDispatch();
-  const { orders, userId, role } = useSelector((state) => state.user);
+  const { orders, userId, role, loading } = useSelector((state) => state.user);
   const { selId } = useSelector((state) => state.seller);
 
   console.log("orders from orders...", orders);
@@ -44,25 +62,31 @@ function Orders() {
       <Typography variant="h5" className={classes.title}>
         Order History:
       </Typography>
-      <Grid item container direction="row">
-        <Grid item xs={12} sm={1} />
-        <Grid item xs={12} sm={10}>
-          <Grid container spacing={2}>
-            {orders ? (
-              orders.length > 0 ? (
-                orders.map((order) => (
-                  <Grid item xs={12} sm={4} key={order._id}>
-                    <OrderCard order={order} role={role} />
-                  </Grid>
-                ))
-              ) : (
-                <p className={classes.para}>No orders present.</p>
-              )
-            ) : null}
+      {loading ? (
+        <div className={classes.spinner}>
+          <HashLoader size={80} color="#3f51b5" />
+        </div>
+      ) : (
+        <Grid item container direction="row" className={classes.cardMain}>
+          <Grid item xs={12} sm={1} />
+          <Grid item xs={12} sm={10}>
+            <Grid container spacing={2}>
+              {orders ? (
+                orders.length > 0 ? (
+                  orders.map((order) => (
+                    <Grid item xs={12} sm={4} key={order._id} className={classes.ordercard}>
+                      <OrderCard order={order} role={role} />
+                    </Grid>
+                  ))
+                ) : (
+                  <p className={classes.para}>No orders present.</p>
+                )
+              ) : null}
+            </Grid>
           </Grid>
+          <Grid item xs={12} sm={1} />
         </Grid>
-        <Grid item xs={12} sm={1} />
-      </Grid>
+      )}
     </>
   );
 }

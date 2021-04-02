@@ -1,7 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
-import SearchIcon from "@material-ui/icons/Search";
+import searchIcon from "../images/searchIcon.png";
 
 //Material-ui
 import { Divider, IconButton, Paper } from "@material-ui/core";
@@ -17,7 +17,13 @@ const useStyles = makeStyles((theme) => ({
   searchBar: {
     padding: "15px",
     width: "50%",
-    // transform: "rotate(358deg)",
+    border: "2px solid black",
+    background: `url(${searchIcon}) no-repeat 100%`,
+    backgroundPosition: "9px 10px",
+    backgroundSize: 26,
+    paddingLeft: 40,
+    backgroundColor: "#f4f4f4",
+    borderRadius: 5,
   },
   iconButton: {
     padding: 10,
@@ -25,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     height: 28,
     margin: 4,
+  },
+
+  inputContainer: {
+    position: "relative",
   },
 }));
 
@@ -37,17 +47,15 @@ function SearchBar(props) {
 
   return (
     <form className={classes.root} noValidate autoComplete="on">
-      <input
-        type="text"
-        className={classes.searchBar}
-        placeholder="Search for available restaurants..."
-        style={{ border: "2px solid black" }}
-        onChange={handleSearch}
-      />
-      {/* <Divider orientation="vertical" flexItem style={{ color: "red" }} />
-        <IconButton color="primary" className={classes.iconButton} aria-label="directions">
-          <MyLocation />
-        </IconButton> */}
+      <div className={classes.inputContainer}>
+        {/* <img src={searchIcon} height="50px" width="50px" /> */}
+        <input
+          type="text"
+          className={classes.searchBar}
+          placeholder="Search for available restaurants..."
+          onChange={handleSearch}
+        />
+      </div>
     </form>
   );
 }

@@ -14,6 +14,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import FastfoodOutlinedIcon from "@material-ui/icons/FastfoodOutlined";
 import AssessmentIcon from "@material-ui/icons/Assessment";
+import DashboardIcon from "@material-ui/icons/Dashboard";
 import { logoutUser } from "../redux/actions/userActions";
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +45,15 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     textDecoration: "none",
   },
+  loggedInName: {
+    textTransform: "capitalize",
+    display: "inline",
+    background: "#2e3871",
+    fontSize: "0.875rem",
+    lineHeight: "1.75px",
+    letterSpacing: "0.02857em",
+    marginRight: "7px",
+  },
 }));
 
 function Navbar() {
@@ -61,10 +71,10 @@ function Navbar() {
   };
   if (userLogin) {
     menuItems = [
-      {
-        name: `Hello,  ${firstname}`,
-        link: "/",
-      },
+      // {
+      //   name: `Hello,  ${firstname}`,
+      //   link:"/"
+      // },
       {
         link: "/orders",
         name: "Orders",
@@ -96,10 +106,10 @@ function Navbar() {
     ];
   } else if (sellerLogin) {
     menuItems = [
-      {
-        name: `Hello ${restaurantname}`,
-        link: "/seller/dashboard",
-      },
+      // {
+      //   name: `Hello ${restaurantname}`,
+      //   link: "/seller/dashboard",
+      // },
       {
         link: "/orders",
         name: "Customer Orders",
@@ -108,7 +118,7 @@ function Navbar() {
       {
         link: "/seller/dashboard",
         name: "Dashboard",
-        icon: <FastfoodOutlinedIcon className="text-white" />,
+        icon: <DashboardIcon className="text-white" />,
       },
       {
         link: "/userLogout",
@@ -129,6 +139,8 @@ function Navbar() {
           </Typography>
 
           <div className={classes.navLinksHide}>
+            {userLogin && <h5 className={classes.loggedInName}>Welcome, {firstname}</h5>}
+            {sellerLogin && <h5 className={classes.loggedInName}>Welcome {restaurantname}</h5>}
             {menuItems.map((item) => (
               <Button color="inherit" onClick={() => history.push(`${item.link}`)}>
                 {item.name}

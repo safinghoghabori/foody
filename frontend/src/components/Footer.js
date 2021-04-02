@@ -124,7 +124,7 @@ export default function Footer() {
           </a>{" "}
           &{" "}
           <a href="!#" className={classes.footerLink}>
-            Mitesh Kukadeja
+            Mitesh Kukdeja
           </a>{" "}
         </div>
       </Grid>

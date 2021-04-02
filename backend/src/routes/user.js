@@ -97,8 +97,10 @@ router.get("/get-cart-items/:userId", async (req, res) => {
     //find user
     const user = await User.findById(userId).populate("cart.items.item");
 
+    console.log("user...", user);
     if (user) {
       const cartItems = user.cart.items;
+      console.log("cartItems...", cartItems);
       let totalPrice = 0;
       cartItems.forEach((item) => {
         totalPrice = totalPrice + item.qty * item.item.price;
@@ -204,7 +206,7 @@ router.get("/restaurants", async (req, res) => {
 router.get("/restaurant/:selId", async (req, res) => {
   try {
     const selId = req.params.selId;
-    const restaurant = await Seller.findById(selId).populate("items");
+    const restaurant = await Seller.findById(selId).select("-password").populate("items");
 
     if (!restaurant) {
       res.status(400).send({ error: "No restaurant available...!" });

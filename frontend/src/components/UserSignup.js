@@ -26,12 +26,20 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     width: "40%",
     margin: "10px",
+    [theme.breakpoints.down("sm")]: {
+      width: "55%",
+    },
   },
   card: {
     textAlign: "center",
   },
   small: {
     fontSize: 20,
+  },
+  mainCard: {
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
   },
 }));
 
@@ -80,7 +88,7 @@ function UserSignup() {
 
   return (
     <Grid container className={classes.form}>
-      <Grid item sm>
+      <Grid item sm className={classes.mainCard}>
         <div className={classes.card}>
           {" "}
           <br />
@@ -176,6 +184,7 @@ function UserSignup() {
             <Button type="submit" variant="contained" color="primary" onClick={handleSignup}>
               Register
             </Button>
+            <br />
             <br />
             <small className={classes.small}>
               Already have an account ? Login <Link to="/userSignin">here</Link>

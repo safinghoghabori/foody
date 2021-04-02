@@ -9,6 +9,9 @@ import SearchBar from "./SearchBar";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+//react-spinner
+import HashLoader from "react-spinners/HashLoader";
+
 //Material-ui
 import Grid from "@material-ui/core/Grid";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -22,9 +25,6 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import Button from "@material-ui/core/Button";
 
-//react-spinner
-import BounceLoader from "react-spinners/BounceLoader";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -37,6 +37,8 @@ const useStyles = makeStyles((theme) => ({
 
   cardRoot: {
     display: "flex",
+    width: 328,
+    height: 200,
   },
   details: {
     display: "flex",
@@ -62,6 +64,13 @@ const useStyles = makeStyles((theme) => ({
   search: {
     margin: "50px",
     marginLeft: "100px",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "50px",
+      marginBottom: "50px",
+      textAlign: "center",
+      width: "100%",
+      transform: "translateX(-103px)",
+    },
   },
   link: {
     textDecoration: "none",
@@ -99,11 +108,17 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto",
   },
   headerImg: {
-    height: "100%",
+    height: "475px",
     width: "100%",
     [theme.breakpoints.down("xs")]: {
       width: "80%",
     },
+  },
+  spinner: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "15%",
   },
 }));
 
@@ -159,7 +174,9 @@ function Restaurant() {
   return (
     <>
       {loading ? (
-        <BounceLoader />
+        <div className={classes.spinner}>
+          <HashLoader size={80} color="#3f51b5" />
+        </div>
       ) : (
         restaurantUser && (
           <>

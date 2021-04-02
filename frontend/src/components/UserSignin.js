@@ -24,12 +24,20 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     width: "40%",
     margin: "10px",
+    [theme.breakpoints.down("sm")]: {
+      width: "70%",
+    },
   },
   card: {
     textAlign: "center",
   },
   small: {
     fontSize: 20,
+  },
+  cardGrid: {
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
   },
 }));
 
@@ -72,7 +80,7 @@ function UserSignin() {
 
   return (
     <Grid container className={classes.form}>
-      <Grid item sm>
+      <Grid item sm className={classes.cardGrid}>
         <div className={classes.card}>
           {" "}
           <br />
