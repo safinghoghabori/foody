@@ -153,11 +153,8 @@ function SellerDashboard() {
       return toast.error(`All fields are required...!`, { position: "bottom-right" });
     }
 
-    console.log("error...", error);
-
-    if (error) {
-      // dispatch({ type: CLEAR_SELLER_ERROR });
-      return toast.error(`${error}...!`, { position: "bottom-right" });
+    if (!image) {
+      return toast.error(`Image is required...!`, { position: "bottom-right" });
     }
 
     const itemData = new FormData();

@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   safeFood: {
+    color: "#343434",
     fontSize: 64,
     fontWeight: 400,
     [theme.breakpoints.down("sm")]: {
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   delivery: {
-    color: "#86b2f3",
+    color: "#08085c",
     fontSize: 64,
     fontWeight: "bold",
     marginTop: -30,

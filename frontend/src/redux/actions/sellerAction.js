@@ -144,6 +144,8 @@ export const addItem = (itemData, restId) => (dispatch) => {
       dispatch({ type: CLEAR_SELLER_ERROR });
     })
     .catch((error) => {
+      console.log("=============");
+      alert(error.response.data.error);
       console.log("error...", error.response);
       if (error.response) {
         console.log("yes it comes...");

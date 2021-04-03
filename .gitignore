@@ -2,6 +2,8 @@ frontend/node_modules/
 backend/node_modules/
 
 *.txt
+backend/.env
+backend/keys.js
 
 # /.pnp
 # .pnp.js
