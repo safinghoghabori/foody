@@ -14,6 +14,8 @@ import {
 
 export const signupUser = (newUserData, history) => (dispatch) => {
   dispatch({ type: LOADING_USER_UI });
+  dispatch({ type: CLEAR_USER_ERROR });
+
   axios
     .post("/signup", newUserData)
     .then((res) => {

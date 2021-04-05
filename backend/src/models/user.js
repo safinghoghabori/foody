@@ -58,6 +58,12 @@ const userSchema = new mongoose.Schema({
       },
     ],
   },
+  emailToken: {
+    type: String,
+  },
+  isVerified: {
+    type: Boolean,
+  },
 });
 
 userSchema.methods.addToCart = function (item) {

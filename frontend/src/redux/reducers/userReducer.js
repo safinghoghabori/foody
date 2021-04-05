@@ -37,6 +37,7 @@ export const userReducer = (state = initialState, action) => {
     case USER_SIGNUP_SUCCESS: {
       return {
         ...state,
+        error: "",
       };
     }
     case SET_USER: {

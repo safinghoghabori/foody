@@ -9,8 +9,6 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import { Paper } from "@material-ui/core";
 
 //toast
 import { toast, ToastContainer } from "react-toastify";
@@ -72,6 +70,10 @@ function UserSignup() {
     // console.log("firstname...", firstname);
     if (!firstname || !lastname || !email || !password || !address || !state || !city) {
       return toast.error("All fields are compulsory...!", { position: "bottom-center" });
+    }
+
+    if (error) {
+      return toast.error(`${error}`, { position: "bottom-center" });
     }
     //pass obj to the actions so that we can directly pass it to API requests
     const newUserData = {

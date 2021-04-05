@@ -8,6 +8,13 @@ const Order = require("../models/order");
 
 const router = express.Router();
 
+//require crypto package to pass it as email token
+const crypto = require("crypto");
+
+//require sendGrid
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 router.post("/signup", async (req, res) => {
   console.log(req.body);
   try {
@@ -15,6 +22,8 @@ router.post("/signup", async (req, res) => {
     if (!firstname || !lastname || !email || !password || !address || !state || !city) {
       return res.status(404).send({ error: "All fields are required...!" });
     }
+
+    const emailToken = crypto.randomBytes(64).toString("hex");
 
     //create model object to store data into database
     const user = new User({
@@ -25,8 +34,33 @@ router.post("/signup", async (req, res) => {
       address,
       state,
       city,
+      emailToken,
+      isVerified: false,
     });
     console.log(`user signup...${user}`);
+
+    //create msg object and send it
+    const msg = {
+      from: "safinghoghabori65@gmail.com",
+      to: email,
+      subject: "Foody - Verify your email",
+      text: `
+        Hello, thanks for registering on our site.
+        Please copy and paste the address below to verify your account.
+        http://${req.headers.host}/verify-user-email?token=${emailToken}
+      `,
+      html: `
+        <h1>Hello, ${firstname} ${lastname}</h1>
+        <h3>thanks for registering on our site.</h3>
+        <h3>Please click on below link to verify your account.</h3>
+        <a href="http://${req.headers.host}/verify-user-email?token=${emailToken}">Verify your account...click here!</a>
+      `,
+    };
+    try {
+      await sgMail.send(msg);
+    } catch (error) {
+      console.log("signup email sending error...", error);
+    }
 
     //save user into database
     await user.save(req.body);
@@ -37,6 +71,23 @@ router.post("/signup", async (req, res) => {
       return res.status(404).send({ error: "Email already exists...!" });
     }
     console.log(error);
+    res.status(404).send({ error });
+  }
+});
+
+// Email verification route
+router.get("/verify-user-email", async (req, res) => {
+  try {
+    const user = await User.findOne({ emailToken: req.query.token });
+    if (!user) {
+      return console.log("Token is invalid...try again");
+    }
+    user.emailToken = null;
+    user.isVerified = true;
+    await user.save();
+    res.status(200).send({ msg: "Account verified successfully..." });
+  } catch (error) {
+    console.log("user verify email error...", error);
     res.status(404).send({ error });
   }
 });
@@ -52,6 +103,11 @@ router.post("/signin", async (req, res) => {
     const user = await User.findOne({ email, password }).select("-password");
     if (!user) {
       return res.status(404).send({ error: "Invalid email or password...!" });
+    }
+
+    //check if user is verified or not(verify his account by checking email or not)
+    if (!user.isVerified) {
+      return res.status(404).send({ error: "Please verify your account and try again...!" });
     }
 
     //if success
