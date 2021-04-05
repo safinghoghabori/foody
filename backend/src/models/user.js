@@ -64,6 +64,8 @@ const userSchema = new mongoose.Schema({
   isVerified: {
     type: Boolean,
   },
+  resetPasswordToken: String,
+  expirePasswordToken: Date,
 });
 
 userSchema.methods.addToCart = function (item) {

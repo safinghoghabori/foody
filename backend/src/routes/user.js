@@ -64,7 +64,8 @@ router.post("/signup", async (req, res) => {
 
     //save user into database
     await user.save(req.body);
-    res.send(user);
+    // res.send(user);
+    res.status(200).send({ msg: "Please check your email to verify your account" });
   } catch (error) {
     //throw error if email already exists
     if (error.keyValue) {
@@ -80,7 +81,7 @@ router.get("/verify-user-email", async (req, res) => {
   try {
     const user = await User.findOne({ emailToken: req.query.token });
     if (!user) {
-      return console.log("Token is invalid...try again");
+      return res.status(404).send({ error: "Token is invalid...try again" });
     }
     user.emailToken = null;
     user.isVerified = true;
@@ -114,6 +115,80 @@ router.post("/signin", async (req, res) => {
     res.send(user);
   } catch (error) {
     res.status(404).send({ error });
+  }
+});
+
+//reset password route
+router.post("/reset-user-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).send({ error: "User doesn't exist with this email...!" });
+    }
+
+    const resetPasswordToken = crypto.randomBytes(64).toString("hex");
+
+    user.resetPasswordToken = resetPasswordToken;
+    user.expirePasswordToken = Date.now() + 3600000;
+    await user.save();
+
+    //create msg object and send it
+    const msg = {
+      from: "safinghoghabori65@gmail.com",
+      to: email,
+      subject: "Foody - Reset Password",
+      text: `
+        Hello, reset your password.
+        Please copy and paste the address below to reset your password.
+        http://localhost:3000/new-user-password/token=${resetPasswordToken}
+      `,
+      html: `
+        <h1>Hello, ${user.firstname} ${user.lastname}</h1>
+        <h3>Reset your password.</h3>
+        <h3>Please click on below link to reset your password.</h3>
+        <a href="http://localhost:3000/new-user-password/token=${resetPasswordToken}">Reset password...click here!</a>
+      `,
+    };
+    try {
+      await sgMail.send(msg);
+    } catch (error) {
+      console.log("signup email sending error...", error);
+    }
+
+    res.status(200).send({ msg: "Please check your email to reset password" });
+  } catch (error) {
+    console.log(error);
+    res.status(404).send({ error });
+  }
+});
+
+// New password route
+router.post("/new-user-password", async (req, res) => {
+  try {
+    const { newPassword, token } = req.body;
+
+    console.log("token...", token);
+
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      expirePasswordToken: { $gt: Date.now() },
+    });
+    console.log(user);
+    if (!user) {
+      return res.status(404).send({ error: "Try again! Session has already expired...!" });
+    }
+
+    user.password = newPassword;
+    user.resetPasswordToken = null;
+    user.expirePasswordToken = null;
+
+    await user.save();
+    res.status(200).send({ msg: "Password updated successfully...!" });
+  } catch (error) {
+    console.log(error);
+    res.status(404).send({ error: "Can't reset password, something went wrong...!" });
   }
 });
 

@@ -10,6 +10,8 @@ import {
   ADD_CART_FAIL,
   SET_CART,
   SET_ORDERS,
+  RESET_PASS_SUCCESS,
+  ADD_NEW_PASS_SUCCESS,
 } from "../types";
 
 export const signupUser = (newUserData, history) => (dispatch) => {
@@ -166,5 +168,46 @@ export const getOrders = (userId) => (dispatch) => {
     })
     .catch((error) => {
       console.log(error.response);
+    });
+};
+
+export const resetUserPassword = (email) => (dispatch) => {
+  axios
+    .post("/reset-user-password", { email })
+    .then((res) => {
+      dispatch({
+        type: RESET_PASS_SUCCESS,
+        payload: res.data.msg,
+      });
+    })
+    .catch((error) => {
+      console.log(error.response);
+      if (error.response) {
+        dispatch({
+          type: SET_USER_ERROR,
+          payload: error.response.data,
+        });
+      }
+    });
+};
+
+export const newUserPassword = (newPassword, token) => (dispatch) => {
+  console.log("token...", token);
+  axios
+    .post("/new-user-password", { newPassword, token })
+    .then((res) => {
+      dispatch({
+        type: ADD_NEW_PASS_SUCCESS,
+        payload: res.data.msg,
+      });
+    })
+    .catch((error) => {
+      console.log(error.response);
+      if (error.response) {
+        dispatch({
+          type: SET_USER_ERROR,
+          payload: error.response.data,
+        });
+      }
     });
 };

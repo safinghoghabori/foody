@@ -11,6 +11,8 @@ export const LOADING_USER_UI = "LOADING_USER_UI";
 export const ADD_CART_SUCCESS = "ADD_CART_SUCCESS";
 export const ADD_CART_FAIL = "ADD_CART_FAIL";
 export const SET_ORDERS = "SET_ORDERS";
+export const RESET_PASS_SUCCESS = "SET_PASS_SUCCESS";
+export const ADD_NEW_PASS_SUCCESS = "ADD_NEW_PASS_SUCCESS";
 
 //seller reducer
 export const LOADING_SELLER = "LOADING_SELLER";

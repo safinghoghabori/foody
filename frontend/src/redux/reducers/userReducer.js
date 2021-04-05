@@ -9,6 +9,7 @@ import {
   ADD_CART_FAIL,
   SET_CART,
   SET_ORDERS,
+  RESET_PASS_SUCCESS,
 } from "../types";
 
 const initialState = {
@@ -29,6 +30,8 @@ const initialState = {
   loading: false,
   error: "",
   userLogin: false,
+  resetPassStatus: "",
+  newPassStatus: "",
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -79,6 +82,12 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         orders: action.payload,
         loading: false,
+      };
+    }
+    case RESET_PASS_SUCCESS: {
+      return {
+        ...state,
+        resetPassStatus: action.payload,
       };
     }
 

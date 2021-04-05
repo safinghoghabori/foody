@@ -13,6 +13,7 @@ import Orders from "./components/Orders";
 import SellerSignup from "./components/SellerSignup";
 import SellerSignin from "./components/SellerSignin";
 import SellerDashboard from "./components/SellerDashboard";
+import NewPasswordForm from "./components/NewPasswordForm";
 
 function App() {
   return (
@@ -59,6 +60,10 @@ function App() {
 
             <Route path="/seller/dashboard">
               <SellerDashboard />
+            </Route>
+
+            <Route path="/new-user-password/:token">
+              <NewPasswordForm />
             </Route>
           </Switch>
           <Footer />
