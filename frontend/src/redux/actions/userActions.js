@@ -12,6 +12,9 @@ import {
   SET_ORDERS,
   RESET_PASS_SUCCESS,
   ADD_NEW_PASS_SUCCESS,
+  PAYTM_ERROR,
+  SET_PAYTM_PARAMS,
+  CHANGE_PAYMENT_SUCCESS,
 } from "../types";
 
 export const signupUser = (newUserData, history) => (dispatch) => {
@@ -150,7 +153,7 @@ export const placeOrder = (userId, history) => (dispatch) => {
     .post(`/order/${userId}`)
     .then((res) => {
       dispatch(getOrders(userId));
-      history.push("/orders");
+      // history.push("/orders");
     })
     .catch((error) => {
       console.log(error.response);
@@ -207,6 +210,26 @@ export const newUserPassword = (newPassword, token) => (dispatch) => {
         dispatch({
           type: SET_USER_ERROR,
           payload: error.response.data,
+        });
+      }
+    });
+};
+
+export const makePayment = (name, email, amount, phone) => (dispatch) => {
+  axios
+    .post("/paynow", { name, email, amount, phone })
+    .then((res) => {
+      dispatch({
+        type: SET_PAYTM_PARAMS,
+        payload: res.data,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      if (error.response) {
+        dispatch({
+          type: PAYTM_ERROR,
+          payload: error.response.data.error,
         });
       }
     });

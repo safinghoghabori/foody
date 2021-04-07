@@ -10,6 +10,9 @@ import {
   SET_CART,
   SET_ORDERS,
   RESET_PASS_SUCCESS,
+  SET_PAYTM_PARAMS,
+  PAYTM_ERROR,
+  CHANGE_PAYMENT_SUCCESS,
 } from "../types";
 
 const initialState = {
@@ -32,6 +35,9 @@ const initialState = {
   userLogin: false,
   resetPassStatus: "",
   newPassStatus: "",
+  paytm_params: "",
+  paytm_error: "",
+  isTransactionSuccess: false,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -88,6 +94,26 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         resetPassStatus: action.payload,
+      };
+    }
+    case SET_PAYTM_PARAMS: {
+      return {
+        ...state,
+        paytm_params: action.payload,
+        isTransactionSuccess: true,
+      };
+    }
+    case PAYTM_ERROR: {
+      return {
+        ...state,
+        paytm_error: action.payload,
+        isTransactionSuccess: false,
+      };
+    }
+    case CHANGE_PAYMENT_SUCCESS: {
+      return {
+        ...state,
+        isTransactionSuccess: false,
       };
     }
 

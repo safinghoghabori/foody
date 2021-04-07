@@ -12,18 +12,20 @@ require("./src/db/mongoose");
 const userRoutes = require("./src/routes/user");
 const itemRoutes = require("./src/routes/item");
 const sellerRoutes = require("./src/routes/seller");
+const paymentRoutes = require("./src/routes/paymentRoute");
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 //parse nodejs body
-// app.use(express.json());
+app.use(express.json());
 app.use(bodyParser.json());
 
 //Register router here
 app.use(userRoutes);
 app.use(sellerRoutes);
 app.use(itemRoutes);
+app.use(paymentRoutes);
 
 /*Image upload functionality--to make "uploads" folder publically available so that we can use it and view in the browser*/
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

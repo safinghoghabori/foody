@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import CartItem from "./CartItem";
-import { addDeliveryAddress, getCart } from "../redux/actions/userActions";
+import { addDeliveryAddress, getCart, makePayment } from "../redux/actions/userActions";
 
 //Material-ui
 import Grid from "@material-ui/core/Grid";
@@ -90,11 +90,11 @@ function Cart() {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const { loading, cart, price, error, userId } = useSelector((state) => state.user);
+  const { loading, cart, price, error, userId, email, firstname, paytm_params } = useSelector(
+    (state) => state.user
+  );
 
-  console.log("cart...", cart);
-  console.log("price...", price);
-  console.log("id...", userId);
+  console.log("paytm_params...", paytm_params);
 
   let deliveryCharge = 0;
   let cartPresent = Array.isArray(cart) && cart.length > 0;
@@ -122,12 +122,66 @@ function Cart() {
     });
   };
 
-  console.log("deliveryData...", deliveryData.aptName);
   const handlePlaceOrder = () => {
-    if (!deliveryData.aptName) {
-      return toast.error("All fiedls are compulsory...!", { position: "bottom-center" });
+    if (
+      !deliveryData.aptName ||
+      !deliveryData.locality ||
+      !deliveryData.street ||
+      !deliveryData.zip ||
+      !deliveryData.phoneNo
+    ) {
+      return toast.error("All fiedls are compulsory...!", { position: "bottom-right" });
     } else {
       dispatch(addDeliveryAddress(deliveryData, userId, history));
+
+      function isDate(val) {
+        // Cross realm comptatible
+        return Object.prototype.toString.call(val) === "[object Date]";
+      }
+
+      function isObj(val) {
+        return typeof val === "object";
+      }
+
+      function stringifyValue(val) {
+        if (isObj(val) && !isDate(val)) {
+          return JSON.stringify(val);
+        } else {
+          return val;
+        }
+      }
+
+      function buildForm({ action, params }) {
+        const form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", action);
+
+        Object.keys(params).forEach((key) => {
+          const input = document.createElement("input");
+          input.setAttribute("type", "hidden");
+          input.setAttribute("name", key);
+          input.setAttribute("value", stringifyValue(params[key]));
+          form.appendChild(input);
+        });
+
+        return form;
+      }
+
+      function post(details) {
+        const form = buildForm(details);
+        document.body.appendChild(form);
+        form.submit();
+        form.remove();
+      }
+
+      const totalPrice = price + deliveryCharge;
+      dispatch(makePayment(firstname, email, totalPrice, deliveryData.phoneNo));
+
+      var information = {
+        action: "https://securegw-stage.paytm.in/order/process",
+        params: paytm_params,
+      };
+      post(information);
     }
   };
 

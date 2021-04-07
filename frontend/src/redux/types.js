@@ -13,6 +13,9 @@ export const ADD_CART_FAIL = "ADD_CART_FAIL";
 export const SET_ORDERS = "SET_ORDERS";
 export const RESET_PASS_SUCCESS = "SET_PASS_SUCCESS";
 export const ADD_NEW_PASS_SUCCESS = "ADD_NEW_PASS_SUCCESS";
+export const SET_PAYTM_PARAMS = "SET_PAYTM_PARAMS";
+export const PAYTM_ERROR = "PAYTM_ERROR";
+export const CHANGE_PAYMENT_SUCCESS = "CHANGE_PAYMENT_SUCCESS";
 
 //seller reducer
 export const LOADING_SELLER = "LOADING_SELLER";
@@ -27,7 +30,3 @@ export const ADD_ITEM = "ADD_ITEM";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const EDIT_ITEM = "EDIT_ITEM";
 export const LOGOUT_SELLER = "LOGOUT_SELLER";
-
-//data reducer
-
-//ui reducer

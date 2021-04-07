@@ -12,6 +12,11 @@ import { getOrdersForSeller } from "../redux/actions/sellerAction";
 //react-spinner
 import HashLoader from "react-spinners/HashLoader";
 
+//toast
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { CHANGE_PAYMENT_SUCCESS } from "../redux/types";
+
 const useStyles = makeStyles((theme) => ({
   ...theme.spreadThis,
   para: {
@@ -44,14 +49,18 @@ function Orders() {
   const classes = useStyles();
 
   const dispatch = useDispatch();
-  const { orders, userId, role, loading } = useSelector((state) => state.user);
+  const { orders, userId, role, loading, isTransactionSuccess } = useSelector(
+    (state) => state.user
+  );
   const { selId } = useSelector((state) => state.seller);
-
-  console.log("orders from orders...", orders);
 
   useEffect(() => {
     if (role === "user") {
       dispatch(getOrders(userId));
+      if (isTransactionSuccess) {
+        toast.info("Transaction has done successfully.", { position: "top-center" });
+        dispatch({ type: CHANGE_PAYMENT_SUCCESS });
+      }
     } else {
       dispatch(getOrdersForSeller(selId));
     }
@@ -87,6 +96,9 @@ function Orders() {
           <Grid item xs={12} sm={1} />
         </Grid>
       )}
+
+      {/* Toast Container */}
+      <ToastContainer />
     </>
   );
 }
