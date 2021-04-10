@@ -87,12 +87,6 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
     },
   },
-  // cover: {
-  //   flex: 1,
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   height: "72vh",
-  // },
   coverImg: {
     width: "110%",
     [theme.breakpoints.down("sm")]: {

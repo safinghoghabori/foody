@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 
 import { userReducer } from "./reducers/userReducer";
 import { sellerReducer } from "./reducers/sellerReducer";
+import { adminReducer } from "./reducers/adminReducer";
 
 //store state in localStorage
 const loadState = () => {
@@ -33,6 +34,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const reducers = combineReducers({
   user: userReducer,
   seller: sellerReducer,
+  admin: adminReducer,
 });
 
 const store = createStore(reducers, persistedState, composeEnhancers(applyMiddleware(thunk)));

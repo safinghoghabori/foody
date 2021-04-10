@@ -30,3 +30,11 @@ export const ADD_ITEM = "ADD_ITEM";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const EDIT_ITEM = "EDIT_ITEM";
 export const LOGOUT_SELLER = "LOGOUT_SELLER";
+
+//admin reducer
+export const DELETE_REST_SUCCESS = "DELETE_REST_SUCCESS";
+export const DELETE_REST_FAIL = "DELETE_REST_FAIL";
+export const CLEAR_ADMIN_ERROR = "CLEAR_ADMIN_ERROR";
+export const SET_ADMIN_ERROR = "SET_ADMIN_ERROR";
+export const SET_ALL_RESTAURANTS = "SET_ALL_RESTAURANTS";
+export const LOADING_ADMIN_UI = "LOADING_ADMIN_UI";

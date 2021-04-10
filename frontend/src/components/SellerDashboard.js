@@ -85,6 +85,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     margin: "15%",
   },
+  para: {
+    fontSize: "x-large",
+    marginLeft: "32%",
+  },
 }));
 
 function SellerDashboard() {
@@ -92,7 +96,7 @@ function SellerDashboard() {
   const theme = useTheme();
 
   const [open, setOpen] = useState(false);
-  const [image, setImage] = useState({});
+  const [image, setImage] = useState("");
   const [editItemData, setEditItemData] = useState({
     title: "",
     price: "",
@@ -101,8 +105,6 @@ function SellerDashboard() {
 
   const dispatch = useDispatch();
   const { error, restaurant, loading, items } = useSelector((state) => state.seller);
-
-  console.log("items...", items);
 
   // const { items } = restaurant; //destructuring object(to get items array)
   const restId = restaurant._id;
@@ -119,8 +121,6 @@ function SellerDashboard() {
   }, [items]);
   const [itemsState, setItemsState] = useState(items ? [] : null);
   const [filteredItemsState, setFilteredItemsState] = useState(items ? [] : null);
-
-  console.log("filteredItemsState...", filteredItemsState);
 
   const handleInputChange = (e) => {
     setEditItemData({
@@ -188,9 +188,6 @@ function SellerDashboard() {
     setFilteredItemsState(newList);
   };
 
-  // console.log("filteredItemsState...", filteredItemsState);
-  // console.log("handleSearch...", handleSearch);
-
   return (
     <>
       {loading ? (
@@ -246,6 +243,7 @@ function SellerDashboard() {
 
             <div className={classes.cardItemsArea}>
               <Grid container spacing={2} style={{ marginTop: 40 }}>
+                {items && items.length === 0 && <p className={classes.para}>No Items present.</p>}
                 {filteredItemsState && filteredItemsState.map((item) => <ItemCard {...item} />)}
               </Grid>
               {/* Edit item dialog */}

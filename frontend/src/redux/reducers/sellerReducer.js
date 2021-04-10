@@ -13,8 +13,8 @@ import {
 } from "../types";
 
 const initialState = {
-  restaurants: [],
-  restaurant: {},
+  restaurants: [], //all restaurants
+  restaurant: {}, //seller dashboard restaurant
   restaurantUser: {}, //restaurant to show user
   items: [],
 
@@ -34,8 +34,6 @@ const initialState = {
 };
 
 export const sellerReducer = (state = initialState, action) => {
-  console.log("action...", action.payload);
-  console.log("sellerReducer items state ...", state.items);
   switch (action.type) {
     case SET_RESTAURANTS: {
       return {

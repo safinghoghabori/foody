@@ -80,18 +80,7 @@ function SellerSignup() {
     ) {
       return toast.error("All fields are compulsory...!", { position: "bottom-center" });
     }
-
-    //pass obj to the actions so that we can directly pass it to API requests[NOT PASSING THIS, COZ BACKEND DOESNT ACCEPT SEPERATE DATA AND FORM DATA]
-    // const newSellerData = {
-    //   restaurantname,
-    //   phone,
-    //   email,
-    //   password,
-    //   address,
-    //   state,
-    //   tags,
-    //   city,
-    // };
+    if (!image) return toast.error("Image is required...!", { position: "bottom-center" });
 
     //Passing image and form data together[otherwise its not working if we pass seperate data with seperate objects]
     const formData = new FormData();

@@ -13,6 +13,7 @@ const userRoutes = require("./src/routes/user");
 const itemRoutes = require("./src/routes/item");
 const sellerRoutes = require("./src/routes/seller");
 const paymentRoutes = require("./src/routes/paymentRoute");
+const adminRoutes = require("./src/routes/adminRoute");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -26,6 +27,7 @@ app.use(userRoutes);
 app.use(sellerRoutes);
 app.use(itemRoutes);
 app.use(paymentRoutes);
+app.use(adminRoutes);
 
 /*Image upload functionality--to make "uploads" folder publically available so that we can use it and view in the browser*/
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

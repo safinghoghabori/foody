@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRestaurants } from "../redux/actions/sellerAction";
+import { deleteItem, fetchRestaurants } from "../redux/actions/sellerAction";
 
 import rest1 from "../images/rest1.jpg";
 
@@ -19,6 +19,7 @@ import Divider from "@material-ui/core/Divider";
 
 //react-spinner
 import HashLoader from "react-spinners/HashLoader";
+import { deleteRestaurant, getAllRestaurants } from "../redux/actions/adminActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,12 +76,21 @@ function RestaurantCard(props) {
   const { rests } = props; //get restaurants from props by object destructuring
 
   const dispatch = useDispatch();
-  const { error, loading, restaurants } = useSelector((state) => state.seller);
+  const { loading } = useSelector((state) => state.seller);
+
+  //check admin
+  const isAdmin = localStorage.getItem("admin");
+  console.log(isAdmin);
 
   useEffect(() => {
     //fetch all restaurants
     dispatch(fetchRestaurants());
+    dispatch(getAllRestaurants());
   }, []);
+
+  const handleDelete = (id) => {
+    dispatch(deleteRestaurant(id));
+  };
 
   return (
     <Grid container justify="center">
@@ -100,8 +110,7 @@ function RestaurantCard(props) {
           rests.map((rest) => (
             <Grid item className={classes.cardGrid}>
               <Card className={classes.root}>
-                <img src={rest.image} className={classes.media} />
-                {/* <CardMedia className={classes.media} image={rest.image} /> */}
+                <img src={`/${rest.image}`} className={classes.media} />
                 <CardContent>
                   <Typography
                     gutterBottom
@@ -116,15 +125,26 @@ function RestaurantCard(props) {
                   </Typography>
                 </CardContent>
                 <Divider />
-                <Link to={`/restaurant/${rest._id}`} className={classes.link}>
+                {isAdmin ? (
                   <Button
                     variant="contained"
                     style={{ background: "rgb(67 96 138)", color: "white" }}
                     className={classes.btn}
+                    onClick={() => handleDelete(rest._id)}
                   >
-                    ORDER ONLINE
+                    Delete
                   </Button>
-                </Link>
+                ) : (
+                  <Link to={`/restaurant/${rest._id}`} className={classes.link}>
+                    <Button
+                      variant="contained"
+                      style={{ background: "rgb(67 96 138)", color: "white" }}
+                      className={classes.btn}
+                    >
+                      ORDER ONLINE
+                    </Button>
+                  </Link>
+                )}
               </Card>
             </Grid>
           ))

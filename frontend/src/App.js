@@ -14,6 +14,8 @@ import SellerSignup from "./components/SellerSignup";
 import SellerSignin from "./components/SellerSignin";
 import SellerDashboard from "./components/SellerDashboard";
 import NewPasswordForm from "./components/NewPasswordForm";
+import Login from "./components/Admin/Login";
+import AllRestaurants from "./components/Admin/AllRestaurants";
 
 function App() {
   return (
@@ -64,6 +66,13 @@ function App() {
 
             <Route path="/new-user-password/:token">
               <NewPasswordForm />
+            </Route>
+
+            <Route path="/admin/login">
+              <Login />
+            </Route>
+            <Route path="/admin/allRestaurants">
+              <AllRestaurants />
             </Route>
           </Switch>
           <Footer />

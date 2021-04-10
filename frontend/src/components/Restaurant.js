@@ -143,6 +143,8 @@ function Restaurant() {
   const [itemsState, setItemsState] = useState(items ? [] : null);
   const [filteredItemsState, setFilteredItemsState] = useState(items ? [] : null);
 
+  console.log("fielteredItems ...", filteredItemsState);
+
   const handleAddToCart = (itemId) => {
     dispatch(addToCart(userId, itemId));
     handleToast();
