@@ -48,6 +48,10 @@ const sellerSchema = new mongoose.Schema({
       ref: "Item",
     },
   ],
+  emailToken: String,
+  isVerified: Boolean,
+  resetPasswordToken: String,
+  expirePasswordToken: Date,
 });
 
 const Seller = mongoose.model("Seller", sellerSchema);

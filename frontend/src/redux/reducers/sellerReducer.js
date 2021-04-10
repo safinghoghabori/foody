@@ -5,6 +5,8 @@ import {
   EDIT_ITEM,
   LOADING_SELLER_UI,
   LOGOUT_SELLER,
+  RESET_SELLER_PASS_ERROR,
+  RESET_SELLER_PASS_SUCCESS,
   SELLER_SIGNUP_SUCCESS,
   SET_RESTAURANT,
   SET_RESTAURANTS,
@@ -31,6 +33,8 @@ const initialState = {
   loading: false,
   sellerLogin: false,
   error: "",
+  resetPassSuccess: "",
+  resetPassError: "",
 };
 
 export const sellerReducer = (state = initialState, action) => {
@@ -96,6 +100,18 @@ export const sellerReducer = (state = initialState, action) => {
         error: "",
       };
     }
+    case RESET_SELLER_PASS_SUCCESS: {
+      return {
+        ...state,
+        resetPassSuccess: action.payload,
+      };
+    }
+    case RESET_SELLER_PASS_ERROR: {
+      return {
+        ...state,
+        resetPassError: action.payload,
+      };
+    }
 
     //common cases
     case LOADING_SELLER_UI: {
@@ -116,6 +132,7 @@ export const sellerReducer = (state = initialState, action) => {
         ...state,
         error: "",
         loading: false,
+        resetPassError: "",
       };
     }
     default: {

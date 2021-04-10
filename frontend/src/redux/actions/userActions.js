@@ -15,6 +15,7 @@ import {
   PAYTM_ERROR,
   SET_PAYTM_PARAMS,
   CHANGE_PAYMENT_SUCCESS,
+  RESET_USER_PASS_ERROR,
 } from "../types";
 
 export const signupUser = (newUserData, history) => (dispatch) => {
@@ -175,6 +176,7 @@ export const getOrders = (userId) => (dispatch) => {
 };
 
 export const resetUserPassword = (email) => (dispatch) => {
+  dispatch({ type: CLEAR_USER_ERROR });
   axios
     .post("/reset-user-password", { email })
     .then((res) => {
@@ -187,8 +189,8 @@ export const resetUserPassword = (email) => (dispatch) => {
       console.log(error.response);
       if (error.response) {
         dispatch({
-          type: SET_USER_ERROR,
-          payload: error.response.data,
+          type: RESET_USER_PASS_ERROR,
+          payload: error.response.data.error,
         });
       }
     });

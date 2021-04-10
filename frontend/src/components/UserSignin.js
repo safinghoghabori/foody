@@ -58,9 +58,10 @@ function UserSignin() {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const { loading, error, errorMsg } = useSelector((state) => state.user);
+  const { loading, error, errorMsg, resetPassError } = useSelector((state) => state.user);
 
-  console.log("error state...", error);
+  console.log("error user...", error);
+  console.log("resetPassError...", resetPassError);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -92,6 +93,10 @@ function UserSignin() {
   const handleResetPassword = () => {
     if (!passEmail) {
       return toast.error(`Email is required`, { position: "bottom-right" });
+    }
+
+    if (resetPassError) {
+      return toast.error(`${resetPassError}`, { position: "bottom-right" });
     }
 
     dispatch(resetUserPassword(passEmail));

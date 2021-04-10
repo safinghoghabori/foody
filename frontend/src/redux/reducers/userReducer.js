@@ -13,6 +13,7 @@ import {
   SET_PAYTM_PARAMS,
   PAYTM_ERROR,
   CHANGE_PAYMENT_SUCCESS,
+  RESET_USER_PASS_ERROR,
 } from "../types";
 
 const initialState = {
@@ -33,15 +34,14 @@ const initialState = {
   loading: false,
   error: "",
   userLogin: false,
-  resetPassStatus: "",
-  newPassStatus: "",
+  resetPassSuccess: "",
+  resetPassError: "",
   paytm_params: "",
   paytm_error: "",
   isTransactionSuccess: false,
 };
 
 export const userReducer = (state = initialState, action) => {
-  console.log(action.payload);
   switch (action.type) {
     case USER_SIGNUP_SUCCESS: {
       return {
@@ -93,7 +93,13 @@ export const userReducer = (state = initialState, action) => {
     case RESET_PASS_SUCCESS: {
       return {
         ...state,
-        resetPassStatus: action.payload,
+        resetPassSuccess: action.payload,
+      };
+    }
+    case RESET_USER_PASS_ERROR: {
+      return {
+        ...state,
+        resetPassError: action.payload,
       };
     }
     case SET_PAYTM_PARAMS: {
@@ -139,6 +145,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: "",
+        resetPassError: "",
       };
     }
     default: {

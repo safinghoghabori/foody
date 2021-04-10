@@ -15,7 +15,6 @@ const initialState = {
 };
 
 export const adminReducer = (state = initialState, action) => {
-  console.log("admin action...", action);
   switch (action.type) {
     case SET_ALL_RESTAURANTS: {
       return {

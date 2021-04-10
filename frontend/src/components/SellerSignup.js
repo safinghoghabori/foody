@@ -61,7 +61,6 @@ function SellerSignup() {
     const uploadedFile = e.target.files[0]; // CAN ALSO WRITE const [uploadedFile] = e.target.files[0] //Array Destructuring
     setImage(uploadedFile);
   };
-  console.log("image...", image);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -81,6 +80,8 @@ function SellerSignup() {
       return toast.error("All fields are compulsory...!", { position: "bottom-center" });
     }
     if (!image) return toast.error("Image is required...!", { position: "bottom-center" });
+
+    if (error) return toast.error(`${error.error}`, { position: "bottom-center" });
 
     //Passing image and form data together[otherwise its not working if we pass seperate data with seperate objects]
     const formData = new FormData();

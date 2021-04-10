@@ -9,7 +9,6 @@ import {
 import axios from "axios";
 
 export const getAllRestaurants = () => (dispatch) => {
-  console.log("inside getAllRest.....");
   dispatch({ type: LOADING_ADMIN_UI });
   axios
     .get("/get-all-restaurants")

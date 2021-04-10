@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NewPasswordForm() {
+function NewUserPasswordForm() {
   const classes = useStyles();
   const [newPass, setNewPass] = useState("");
 
@@ -116,4 +116,4 @@ function NewPasswordForm() {
   );
 }
 
-export default NewPasswordForm;
+export default NewUserPasswordForm;

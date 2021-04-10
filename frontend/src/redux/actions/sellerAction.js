@@ -6,6 +6,8 @@ import {
   EDIT_ITEM,
   LOADING_SELLER_UI,
   LOGOUT_SELLER,
+  RESET_SELLER_PASS_ERROR,
+  RESET_SELLER_PASS_SUCCESS,
   SELLER_SIGNUP_SUCCESS,
   SET_ORDERS,
   SET_RESTAURANT,
@@ -231,4 +233,41 @@ export const getOrdersForSeller = (selId) => (dispach) => {
 export const logoutSeller = (history) => (dispatch) => {
   dispatch({ type: LOGOUT_SELLER });
   history.push("/");
+};
+
+export const resetSellerPassword = (email) => (dispatch) => {
+  dispatch({ type: CLEAR_SELLER_ERROR });
+  axios
+    .post("/reset-seller-password", { email })
+    .then((res) => {
+      dispatch({
+        type: RESET_SELLER_PASS_SUCCESS,
+        payload: res.data.msg,
+      });
+    })
+    .catch((error) => {
+      console.log(error.response);
+      if (error.response) {
+        dispatch({
+          type: RESET_SELLER_PASS_ERROR,
+          payload: error.response.data.error,
+        });
+      }
+    });
+};
+
+export const newSellerPassword = (newPassword, token) => (dispatch) => {
+  console.log("token...", token);
+  axios
+    .post("/new-seller-password", { newPassword, token })
+    .then((res) => {})
+    .catch((error) => {
+      console.log(error.response);
+      if (error.response) {
+        dispatch({
+          type: SET_SELLER_ERROR,
+          payload: error.response.data,
+        });
+      }
+    });
 };
