@@ -10,49 +10,73 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
-  container: {
+  footerContainer: {
     backgroundColor: "#e8ede1",
     marginTop: 40,
+  },
+  footer: {
+    width: "90%",
+    margin: "0 auto",
+    fontSize: 20,
+    padding: "4rem 0 1.2rem",
+  },
+  mainTitle: {
+    fontSize: 35,
+    fontWeight: "bold",
+    marginBottom: "2rem",
+  },
+  otherLinksArea: {
+    display: "flex",
     justifyContent: "space-between",
-  },
-  innerCont: {
-    margin: "74px 40px 40px 40px",
-  },
-  resources: {
-    margin: "60px 40px 10px 40px",
-  },
-  buttonStyleOne: {
-    color: "white",
-    backgroundColor: theme.palette.primary.main,
-    "&:hover": {
-      backgroundColor: "#5a5c5a",
+    marginBottom: "3rem",
+    "@media (max-width: 680px)": {
+      flexWrap: "wrap",
+      "& div": {
+        marginTop: "2rem",
+      },
     },
   },
-  buttonStyleTwo: {
-    color: "white",
-    backgroundColor: theme.palette.primary.main,
-    marginLeft: 10,
-    marginTop: 8,
-    "&:hover": {
-      backgroundColor: "#5a5c5a",
-    },
-  },
-  navbarLink: {
-    color: "white",
-    textDecoration: "none",
-  },
-  footerAttr: {
-    textAlign: "center",
-    fontSize: "18px",
-    width: "100%",
-    height: "7vh",
-    backgroundColor: "#e8ede1",
-    borderTop: "1px solid #9e9da2",
-    padding: "8px 0 0 0",
+  linksMainTitle: {
+    fontSize: "1rem",
+    letterSpacing: "0.2rem",
     fontWeight: "500",
+    margin: "0px 0px 0.7rem",
   },
-  footerLink: {
-    textDecoration: "none",
+  linksSubTitle: {
+    fontSize: "1rem",
+    lineHeight: "1.5rem",
+    color: "rgb(105,105,105)",
+    margin: "0.5rem 0px",
+    "&:hover": {
+      color: "black",
+      cursor: "pointer",
+    },
+  },
+  tagLine: {
+    fontSize: "1rem",
+    color: "rgb(79,79,79)",
+    lineHeight: "1rem",
+    marginTop: "1.3rem",
+  },
+  links: {
+    "@media (max-width: 750px)": {
+      width: "100%",
+      maxWidth: "40.3333%",
+    },
+  },
+  newslatterInput: {
+    width: "100%",
+    background: "#e8ede1",
+    border: "1px solid dimgrey",
+    borderRadius: "2px",
+  },
+  subsBtn: {
+    background: "rgb(67, 96, 138);",
+    color: "white",
+    border: 0,
+    padding: "5px",
+    cursor: "pointer",
+    marginTop: "4px",
   },
 }));
 
@@ -60,74 +84,52 @@ export default function Footer() {
   const classes = useStyles();
   return (
     <>
-      <Grid container className={classes.container}>
-        <Grid item xs={12} sm={4} className={classes.innerCont}>
-          {/* {authenticated ? (
-          <Grid container direction="row">
-            <Grid item xs={12} sm={6}>
-              <Typography variant="h5" component="p">
-                Company
-              </Typography>
-              <Typography variant="body1" component="p">
-                <br />
-                - About <br />
-                - Blog <br />
-                - Careers <br />
-                - Contact <br />
-                - Report Fraud <br />
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Typography variant="h5" component="p">
-                For You
-              </Typography>
-              <Typography variant="body1" component="p">
-                <br />
-                - Privacy <br />
-                - Terms <br />
-                - Security <br />
-                - Sitemap <br />
-                - Code of conduct <br />
-              </Typography>
-            </Grid>
-          </Grid>
-        ) : ( */}
-          <Typography variant="h4" component="p">
-            Foody for Business
-          </Typography>
-          <Typography variant="body1" component="p">
-            Get more out of your business, without losing focus on what is most important —
-            delighting your customers
-          </Typography>
-          <br />
-          <Link to="/sellerSignup" className={classes.navbarLink}>
-            <Button className={classes.buttonStyleOne}>Get Started</Button>
-          </Link>
-          {/* )} */}
-        </Grid>
-        <Grid item xs={12} sm={4} className={classes.innerCont}>
-          <Typography variant="h5" component="p">
-            Foody NewsLetter
-          </Typography>
-          <Typography variant="body1" component="p" style={{ marginBottom: 28 }}>
-            Stay updated with new offers from us :)
-          </Typography>
-          <TextField label="Your Email address" variant="outlined" />
-          <Button className={classes.buttonStyleTwo}>SEND</Button>
-        </Grid>
-      </Grid>
-      <Grid container>
-        <div className={classes.footerAttr}>
-          This site is made with ❤ by{" "}
-          <a href="!#" className={classes.footerLink}>
-            Safin Ghoghabori
-          </a>{" "}
-          &{" "}
-          <a href="!#" className={classes.footerLink}>
-            Mitesh Kukdeja
-          </a>{" "}
+      <section className={classes.footerContainer}>
+        <div className={classes.footer}>
+          <div className={classes.mainTitle}>FOODY</div>
+          <div className={classes.otherLinks}>
+            <div className={classes.otherLinksArea}>
+              <div className={classes.links}>
+                <h6 className={classes.linksMainTitle}>COMPANY</h6>
+                <nav>
+                  <p className={classes.linksSubTitle}>Who We Are</p>
+                  <p className={classes.linksSubTitle}>Blog</p>
+                  <p className={classes.linksSubTitle}>Careers</p>
+                  <p className={classes.linksSubTitle}>Report Fraude</p>
+                  <p className={classes.linksSubTitle}>Contact</p>
+                </nav>
+              </div>
+              <div className={classes.links}>
+                <h6 className={classes.linksMainTitle}>FOR FOODIES</h6>
+                <nav>
+                  <p className={classes.linksSubTitle}>Login</p>
+                  <p className={classes.linksSubTitle}>Signup</p>
+                  <p className={classes.linksSubTitle}>Community</p>
+                  <p className={classes.linksSubTitle}>Help</p>
+                </nav>
+              </div>
+              <div className={classes.links}>
+                <h6 className={classes.linksMainTitle}>FOR RESTAURANTS</h6>
+                <nav>
+                  <p className={classes.linksSubTitle}>Add Restaurant</p>
+                  <p className={classes.linksSubTitle}>Login</p>
+                </nav>
+              </div>
+              <div className={classes.links}>
+                <h6 className={classes.linksMainTitle}>NEWSLATTER</h6>
+                <p className={classes.linksSubTitle}>Stay updated with new offers from us</p>
+                <input type="email" name="email" className={classes.newslatterInput} />
+                <button className={classes.subsBtn}>Subscribe</button>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <p className={classes.tagLine}>
+            All trademarks are properties of their respective owners. 2021 © Foody™ Pvt Ltd. All
+            rights reserved.This site is made with ❤ by Safin Ghoghabori & Mitesh Kukdeja
+          </p>
         </div>
-      </Grid>
+      </section>
     </>
   );
 }

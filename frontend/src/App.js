@@ -17,6 +17,7 @@ import NewUserPasswordForm from "./components/NewUserPasswordForm";
 import Login from "./components/Admin/Login";
 import AllRestaurants from "./components/Admin/AllRestaurants";
 import NewSellerPasswordForm from "./components/NewSellerPasswordForm";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 function App() {
   return (
@@ -24,62 +25,64 @@ function App() {
       <Provider store={store}>
         <BrowserRouter>
           <Navbar />
-          <Switch>
-            <Route path="/" exact>
-              <HomeScreen />
-            </Route>
+          <ScrollToTop>
+            <Switch>
+              <Route path="/" exact>
+                <HomeScreen />
+              </Route>
 
-            <Route path="/userSignup">
-              <UserSignup />
-            </Route>
+              <Route path="/userSignup">
+                <UserSignup />
+              </Route>
 
-            <Route path="/userSignin">
-              <UserSignin />
-            </Route>
+              <Route path="/userSignin">
+                <UserSignin />
+              </Route>
 
-            <Route path="/userLogout">
-              <Logout />
-            </Route>
+              <Route path="/userLogout">
+                <Logout />
+              </Route>
 
-            <Route path="/restaurant/:id">
-              <Restaurant />
-            </Route>
+              <Route path="/restaurant/:id">
+                <Restaurant />
+              </Route>
 
-            <Route path="/cart">
-              <Cart />
-            </Route>
+              <Route path="/cart">
+                <Cart />
+              </Route>
 
-            <Route path="/orders">
-              <Orders />
-            </Route>
+              <Route path="/orders">
+                <Orders />
+              </Route>
 
-            <Route path="/sellerSignup">
-              <SellerSignup />
-            </Route>
+              <Route path="/sellerSignup">
+                <SellerSignup />
+              </Route>
 
-            <Route path="/sellerSignin">
-              <SellerSignin />
-            </Route>
+              <Route path="/sellerSignin">
+                <SellerSignin />
+              </Route>
 
-            <Route path="/seller/dashboard">
-              <SellerDashboard />
-            </Route>
+              <Route path="/seller/dashboard">
+                <SellerDashboard />
+              </Route>
 
-            <Route path="/new-user-password/:token">
-              <NewUserPasswordForm />
-            </Route>
+              <Route path="/new-user-password/:token">
+                <NewUserPasswordForm />
+              </Route>
 
-            <Route path="/new-seller-password/:token">
-              <NewSellerPasswordForm />
-            </Route>
+              <Route path="/new-seller-password/:token">
+                <NewSellerPasswordForm />
+              </Route>
 
-            <Route path="/admin/login">
-              <Login />
-            </Route>
-            <Route path="/admin/allRestaurants">
-              <AllRestaurants />
-            </Route>
-          </Switch>
+              <Route path="/admin/login">
+                <Login />
+              </Route>
+              <Route path="/admin/allRestaurants">
+                <AllRestaurants />
+              </Route>
+            </Switch>
+          </ScrollToTop>
           <Footer />
         </BrowserRouter>
       </Provider>

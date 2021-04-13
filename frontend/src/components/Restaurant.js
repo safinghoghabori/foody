@@ -130,18 +130,23 @@ function Restaurant() {
   const dispatch = useDispatch();
 
   const { error, restaurantUser, loading } = useSelector((state) => state.seller);
+  console.log("restaurantUser...", restaurantUser);
+
   const { items } = restaurantUser; //object destructuring
 
-  const { userLogin, userId, addCartSuccess, addCartFail } = useSelector((state) => state.user);
+  const { userLogin, userId } = useSelector((state) => state.user);
+
+  const [itemsState, setItemsState] = useState(items ? [] : null);
+  const [filteredItemsState, setFilteredItemsState] = useState(items ? [] : null);
 
   useEffect(() => {
     dispatch(fetchRestaurant(id));
+  }, []);
 
+  useEffect(() => {
     setItemsState(items);
     setFilteredItemsState(items);
-  }, []);
-  const [itemsState, setItemsState] = useState(items ? [] : null);
-  const [filteredItemsState, setFilteredItemsState] = useState(items ? [] : null);
+  }, [restaurantUser]);
 
   console.log("fielteredItems ...", filteredItemsState);
 
@@ -230,8 +235,8 @@ function Restaurant() {
             <div className={classes.cardItemsArea}>
               <Grid container spacing={2} style={{ marginTop: 40 }}>
                 {filteredItemsState &&
-                  filteredItemsState.map((item) => (
-                    <Grid item container xs={12} sm={6} md={4} justify="center">
+                  filteredItemsState.map((item, k) => (
+                    <Grid item container xs={12} sm={6} md={4} justify="center" key={k}>
                       <Card className={classes.cardRoot}>
                         <div className={classes.details}>
                           <CardContent className={classes.content}>

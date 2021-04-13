@@ -59,6 +59,7 @@ function UserSignup() {
 
   useEffect(() => {
     dispatch({ type: CLEAR_USER_ERROR });
+    // window.scrollTo(0, 0);
   }, []);
 
   const handleSubmit = (e) => {

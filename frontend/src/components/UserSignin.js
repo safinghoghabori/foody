@@ -74,6 +74,10 @@ function UserSignin() {
     setStep(step - 1);
   };
 
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // });
+
   const handleLogin = () => {
     if (!email || !password) {
       return toast.error("All fields are compulsory...!", { position: "bottom-right" });
@@ -90,11 +94,6 @@ function UserSignin() {
       email,
       password,
     };
-
-    // if (error) {
-
-    //   toast.error(`${error}`, { position: "bottom-right" });
-    // }
 
     dispatch(signinUser(userData, history));
   };

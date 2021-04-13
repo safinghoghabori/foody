@@ -172,7 +172,7 @@ function HomeScreen() {
             incididunt ut labore et dolore magna aliqua. Ut enim ad aliquip ex ea commodo consequat.
             Lorem ipsum dolor sit amet.
           </Typography>
-          <Button variant="outlined" className={classes.ctaOrder}>
+          <Button variant="outlined" href="#restaurantsArea" className={classes.ctaOrder}>
             ORDER NOW
           </Button>
         </div>
@@ -180,7 +180,7 @@ function HomeScreen() {
           <img src={cover2} alt="safe-delivery" className={classes.coverImg} />
         </div>
       </section>
-      <div style={{ textAlign: "center" }} className={classes.middleArea}>
+      <div style={{ textAlign: "center" }} className={classes.middleArea} id="restaurantsArea">
         <h2>You are one step away to order food!!</h2>
         <br />
 

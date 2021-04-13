@@ -80,7 +80,6 @@ function RestaurantCard(props) {
 
   //check admin
   const isAdmin = localStorage.getItem("admin");
-  console.log(isAdmin);
 
   useEffect(() => {
     //fetch all restaurants
@@ -100,15 +99,15 @@ function RestaurantCard(props) {
         justify="flex-start"
         spacing={3}
         className={classes.rootGrid}
-        xs={12}
+        // xs={12}
       >
         {loading ? (
           <div className={classes.spinner}>
             <HashLoader size={80} color="#3f51b5" />
           </div>
         ) : (
-          rests.map((rest) => (
-            <Grid item className={classes.cardGrid}>
+          rests.map((rest, k) => (
+            <Grid item className={classes.cardGrid} key={k}>
               <Card className={classes.root}>
                 <img src={`/${rest.image}`} className={classes.media} />
                 <CardContent>

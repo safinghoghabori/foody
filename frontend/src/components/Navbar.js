@@ -71,10 +71,6 @@ function Navbar() {
   };
   if (userLogin) {
     menuItems = [
-      // {
-      //   name: `Hello,  ${firstname}`,
-      //   link:"/"
-      // },
       {
         link: "/orders",
         name: "Orders",
@@ -106,10 +102,6 @@ function Navbar() {
     ];
   } else if (sellerLogin) {
     menuItems = [
-      // {
-      //   name: `Hello ${restaurantname}`,
-      //   link: "/seller/dashboard",
-      // },
       {
         link: "/orders",
         name: "Customer Orders",
@@ -141,8 +133,8 @@ function Navbar() {
           <div className={classes.navLinksHide}>
             {userLogin && <h5 className={classes.loggedInName}>Welcome, {firstname}</h5>}
             {sellerLogin && <h5 className={classes.loggedInName}>Welcome {restaurantname}</h5>}
-            {menuItems.map((item) => (
-              <Button color="inherit" onClick={() => history.push(`${item.link}`)}>
+            {menuItems.map((item, k) => (
+              <Button color="inherit" onClick={() => history.push(`${item.link}`)} key={k}>
                 {item.name}
               </Button>
             ))}
