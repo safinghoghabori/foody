@@ -1,4 +1,9 @@
 import axios from "axios";
+
+//toast
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   CLEAR_USER_ERROR,
   LOADING_USER_UI,
@@ -54,17 +59,16 @@ export const signinUser = (userData, history) => (dispatch) => {
         type: SET_USER,
         payload: res.data,
       });
-      dispatch({ type: CLEAR_USER_ERROR });
       history.push("/");
     })
     .catch((error) => {
-      console.log("its in error");
       console.log(error.response.data);
       if (error.response) {
         dispatch({
           type: SET_USER_ERROR,
           payload: error.response.data,
         });
+        toast.error(`${error.response.data.error}`, { position: "bottom-right" });
       }
     });
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signupUser } from "../redux/actions/userActions";
@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 //toast
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CLEAR_USER_ERROR } from "../redux/types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,29 +53,45 @@ function UserSignup() {
   const [city, setCity] = useState("");
 
   const dispatch = useDispatch();
+
   const history = useHistory();
   const { loading, error } = useSelector((state) => state.user);
 
+  useEffect(() => {
+    dispatch({ type: CLEAR_USER_ERROR });
+  }, []);
+
   const handleSubmit = (e) => {
-    // console.log("app user state...", userState);
     e.preventDefault();
   };
 
   const handleSignup = () => {
-    // var firstNameError = null;
-    // var lastNameError = null;
-    // let emailError = null;
-    // let passwordError = null;
-    // //validate data
-    // console.log("error", firstNameError);
-    // console.log("firstname...", firstname);
     if (!firstname || !lastname || !email || !password || !address || !state || !city) {
       return toast.error("All fields are compulsory...!", { position: "bottom-center" });
     }
 
+    /* input validations */
+    const letters = /^[A-Za-z]+$/;
+    if (!firstname.match(letters) || !lastname.match(letters))
+      return toast.error("Please enter alphabate characters only in firstname and lastname", {
+        position: "bottom-center",
+      });
+
+    const mailFormate = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+    if (!email.match(mailFormate))
+      return toast.error("Please enter valid email address", {
+        position: "bottom-center",
+      });
+
+    if (!state.match(letters) || !city.match(letters))
+      return toast.error("Please enter alphabate characters only in state and city name", {
+        position: "bottom-center",
+      });
+
     if (error) {
       return toast.error(`${error}`, { position: "bottom-center" });
     }
+
     //pass obj to the actions so that we can directly pass it to API requests
     const newUserData = {
       firstname,
@@ -122,7 +139,6 @@ function UserSignup() {
               label="Lirstname"
               variant="outlined"
               onChange={(e) => setLastname(e.target.value)}
-              // helperText={!lastname ? "Lastname must be entered" : ""}
               required
             />
             <br />
@@ -133,7 +149,6 @@ function UserSignup() {
               label="Email"
               variant="outlined"
               onChange={(e) => setEmail(e.target.value)}
-              // helperText={!email ? "Email must be entered" : ""}
               required
             />
             <br />
@@ -145,7 +160,6 @@ function UserSignup() {
               label="Password"
               variant="outlined"
               onChange={(e) => setPassword(e.target.value)}
-              // helperText={!password ? "Password must be entered" : ""}
               required
             />
             <br />
@@ -156,7 +170,6 @@ function UserSignup() {
               label="Address"
               variant="outlined"
               onChange={(e) => setAddress(e.target.value)}
-              // helperText={!address ? "Address must be entered" : ""}
               required
             />
             <br />
@@ -167,7 +180,6 @@ function UserSignup() {
               label="State"
               variant="outlined"
               onChange={(e) => setState(e.target.value)}
-              // helperText={!state ? "State must be entered" : ""}
               required
             />
             <br />
@@ -178,7 +190,6 @@ function UserSignup() {
               label="City"
               variant="outlined"
               onChange={(e) => setCity(e.target.value)}
-              // helperText={!lastname ? "City must be entered" : ""}
               required
             />
             <br />
@@ -189,7 +200,7 @@ function UserSignup() {
             <br />
             <br />
             <small className={classes.small}>
-              Already have an account ? Login <Link to="/userSignin">here</Link>
+              Already have an account?<Link to="/userSignin"> Login here</Link>
             </small>
           </form>
         </div>

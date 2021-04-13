@@ -132,6 +132,19 @@ function Cart() {
     ) {
       return toast.error("All fiedls are compulsory...!", { position: "bottom-right" });
     } else {
+      /* input validations */
+      const letters = /^[A-Za-z]+$/;
+      if (!deliveryData.locality.match(letters) || !deliveryData.street.match(letters))
+        return toast.error("Please enter alphabate characters only in locality and street name", {
+          position: "bottom-center",
+        });
+
+      const nos = /^\d{10}$/;
+      if (!deliveryData.phoneNo.match(nos))
+        return toast.error("Phoneno must contain only 10 digits and numeric value only", {
+          position: "bottom-center",
+        });
+
       dispatch(addDeliveryAddress(deliveryData, userId, history));
 
       function isDate(val) {

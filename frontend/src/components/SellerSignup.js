@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 //toast
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CLEAR_USER_ERROR } from "../redux/types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,6 +80,31 @@ function SellerSignup() {
     ) {
       return toast.error("All fields are compulsory...!", { position: "bottom-center" });
     }
+
+    /* input validations */
+    const letters = /^[A-Za-z]+$/;
+    if (!restaurantname.match(letters))
+      return toast.error("Please enter alphabate characters only in restaurant name", {
+        position: "bottom-center",
+      });
+
+    const mailFormate = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+    if (!email.match(mailFormate))
+      return toast.error("Please enter valid email address", {
+        position: "bottom-center",
+      });
+
+    if (!state.match(letters) || !city.match(letters))
+      return toast.error("Please enter alphabate characters only in state and city name", {
+        position: "bottom-center",
+      });
+
+    const nos = /^\d{10}$/;
+    if (!phoneno.match(nos))
+      return toast.error("Phoneno must contain only 10 digits and numeric value only", {
+        position: "bottom-center",
+      });
+
     if (!image) return toast.error("Image is required...!", { position: "bottom-center" });
 
     if (error) return toast.error(`${error.error}`, { position: "bottom-center" });
