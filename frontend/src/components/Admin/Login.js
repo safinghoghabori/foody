@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 //Material-ui
 import TextField from "@material-ui/core/TextField";
@@ -12,6 +12,7 @@ import Button from "@material-ui/core/Button";
 //toast
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { SET_ADMIN } from "../../redux/types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,6 +54,11 @@ function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const { adminLogin } = useSelector((state) => state.admin);
+
+  //check admin is login or not
+  if (adminLogin) history.push("/admin/allRestaurants");
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -68,6 +74,8 @@ function Login() {
         password,
         isAdmin: true,
       };
+
+      dispatch({ type: SET_ADMIN });
 
       localStorage.setItem("admin", JSON.stringify(userData));
       history.push("/admin/allRestaurants");

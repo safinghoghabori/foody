@@ -179,7 +179,7 @@ export const getOrders = (userId) => (dispatch) => {
     });
 };
 
-export const resetUserPassword = (email) => (dispatch) => {
+export const resetUserPassword = (email, history) => (dispatch) => {
   dispatch({ type: CLEAR_USER_ERROR });
   axios
     .post("/reset-user-password", { email })
@@ -188,6 +188,10 @@ export const resetUserPassword = (email) => (dispatch) => {
         type: RESET_PASS_SUCCESS,
         payload: res.data.msg,
       });
+      toast.info(`Please check your email to reset password`, { position: "bottom-right" });
+      setTimeout(() => {
+        history.push("/");
+      }, 3000);
     })
     .catch((error) => {
       console.log(error.response);
@@ -196,6 +200,7 @@ export const resetUserPassword = (email) => (dispatch) => {
           type: RESET_USER_PASS_ERROR,
           payload: error.response.data.error,
         });
+        toast.error(`${error.response.data.error}`, { position: "bottom-right" });
       }
     });
 };

@@ -1,4 +1,9 @@
 import axios from "axios";
+
+//toast
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   ADD_ITEM,
   CLEAR_SELLER_ERROR,
@@ -72,8 +77,8 @@ export const fetchRestaurantSeller = (restId) => (dispatch) => {
     .catch((error) => {
       console.log(error.response.data);
       dispatch({
-        type: SET_RESTAURANT,
-        payload: {},
+        type: SET_SELLER_ERROR,
+        payload: error.response.data.error,
       });
     });
 };
@@ -114,16 +119,10 @@ export const signinSeller = (sellerData, history) => (dispatch) => {
         type: SET_RESTAURANT,
         payload: res.data,
       });
-      dispatch({ type: CLEAR_SELLER_ERROR });
-
       history.push("/seller/dashboard");
     })
     .catch((error) => {
       if (error.response) {
-        dispatch({
-          type: SET_RESTAURANT,
-          payload: [],
-        });
         dispatch({
           type: SET_SELLER_ERROR,
           payload: error.response.data.error,
@@ -235,7 +234,7 @@ export const logoutSeller = (history) => (dispatch) => {
   history.push("/");
 };
 
-export const resetSellerPassword = (email) => (dispatch) => {
+export const resetSellerPassword = (email, history) => (dispatch) => {
   dispatch({ type: CLEAR_SELLER_ERROR });
   axios
     .post("/reset-seller-password", { email })
@@ -244,6 +243,10 @@ export const resetSellerPassword = (email) => (dispatch) => {
         type: RESET_SELLER_PASS_SUCCESS,
         payload: res.data.msg,
       });
+      toast.info(`Please check your email to reset password`, { position: "bottom-right" });
+      setTimeout(() => {
+        history.push("/");
+      }, 3000);
     })
     .catch((error) => {
       console.log(error.response);
@@ -252,6 +255,7 @@ export const resetSellerPassword = (email) => (dispatch) => {
           type: RESET_SELLER_PASS_ERROR,
           payload: error.response.data.error,
         });
+        toast.error(`${error.response.data.error}`, { position: "bottom-right" });
       }
     });
 };

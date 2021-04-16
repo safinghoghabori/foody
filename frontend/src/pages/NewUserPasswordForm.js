@@ -62,18 +62,17 @@ function NewUserPasswordForm() {
   const tokenSplit = token.split("=");
   const actualToken = tokenSplit[1];
 
-  console.log(actualToken);
   const handleNewPassword = () => {
     if (!newPass) {
       return toast.error(`Please enter new password`, { position: "bottom-right" });
     }
 
     dispatch(newUserPassword(newPass, actualToken));
-    toast.error(`Your password has been changed successfully!`, { position: "bottom-right" });
+    toast.info(`Your password has been changed successfully!`, { position: "bottom-right" });
 
     setTimeout(() => {
       history.push("/userSignin");
-    }, 4000);
+    }, 3000);
   };
 
   return (
@@ -85,9 +84,6 @@ function NewUserPasswordForm() {
 
           <Typography variant="h4" className={classes.title}>
             New Password{" "}
-            {/* <span role="img" aria-label="Pizza Emoji">
-                
-                </span> */}
           </Typography>
           <form noValidate onSubmit={handleSubmit}>
             <br />

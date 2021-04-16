@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import CartItem from "./CartItem";
+import CartItem from "../components/CartItem";
 import { addDeliveryAddress, getCart, makePayment } from "../redux/actions/userActions";
 
 //Material-ui
@@ -90,9 +90,20 @@ function Cart() {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const { loading, cart, price, error, userId, email, firstname, paytm_params } = useSelector(
-    (state) => state.user
-  );
+  const {
+    loading,
+    cart,
+    price,
+    error,
+    userId,
+    email,
+    firstname,
+    paytm_params,
+    userLogin,
+  } = useSelector((state) => state.user);
+
+  // Check if user is logged in or not
+  if (!userLogin) history.push("/");
 
   console.log("paytm_params...", paytm_params);
 
@@ -133,7 +144,7 @@ function Cart() {
       return toast.error("All fiedls are compulsory...!", { position: "bottom-right" });
     } else {
       /* input validations */
-      const letters = /^[A-Za-z]+$/;
+      const letters = /^[A-Za-z\s]+$/;
       if (!deliveryData.locality.match(letters) || !deliveryData.street.match(letters))
         return toast.error("Please enter alphabate characters only in locality and street name", {
           position: "bottom-center",
@@ -190,11 +201,13 @@ function Cart() {
       const totalPrice = price + deliveryCharge;
       dispatch(makePayment(firstname, email, totalPrice, deliveryData.phoneNo));
 
-      var information = {
-        action: "https://securegw-stage.paytm.in/order/process",
-        params: paytm_params,
-      };
-      post(information);
+      if (paytm_params) {
+        var information = {
+          action: "https://securegw-stage.paytm.in/order/process",
+          params: paytm_params,
+        };
+        post(information);
+      }
     }
   };
 

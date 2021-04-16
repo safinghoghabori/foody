@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import RestaurantCard from "../RestaurantCard";
 import SearchBar from "../SearchBar";
 
@@ -21,11 +22,19 @@ const useStyles = makeStyles((theme) => ({
 
 function AllRestaurants() {
   const classes = useStyles();
+  const history = useHistory();
 
-  const { allRestaurants } = useSelector((state) => state.admin);
+  const { allRestaurants, adminLogin } = useSelector((state) => state.admin);
 
   const [restaurantsState, setRestaurantsState] = useState(allRestaurants ? [] : null);
   const [filteredRestsState, setFilteredRestsState] = useState(allRestaurants ? [] : null);
+
+  console.log(adminLogin);
+
+  //check admin is login or not
+  if (!adminLogin) {
+    history.push("/admin/login");
+  }
 
   useEffect(() => {
     setRestaurantsState(allRestaurants);

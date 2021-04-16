@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import SearchBar from "./SearchBar";
-import cover from "../images/food_img.jpg";
-import cover2 from "../images/food_img2.png";
-import RestaurantCard from "./RestaurantCard";
+import SearchBar from "../components/SearchBar";
+import cover from "../images/food_img.png";
+import RestaurantCard from "../components/RestaurantCard";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "../styles/header.css";
@@ -177,7 +176,7 @@ function HomeScreen() {
           </Button>
         </div>
         <div className={classes.coverImg}>
-          <img src={cover2} alt="safe-delivery" className={classes.coverImg} />
+          <img src={cover} alt="safe-delivery" className={classes.coverImg} />
         </div>
       </section>
       <div style={{ textAlign: "center" }} className={classes.middleArea} id="restaurantsArea">

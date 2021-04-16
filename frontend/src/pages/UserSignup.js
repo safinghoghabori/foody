@@ -55,7 +55,10 @@ function UserSignup() {
   const dispatch = useDispatch();
 
   const history = useHistory();
-  const { loading, error } = useSelector((state) => state.user);
+  const { loading, error, userLogin } = useSelector((state) => state.user);
+
+  //check user is logged in or not
+  if (userLogin) history.push("/");
 
   useEffect(() => {
     dispatch({ type: CLEAR_USER_ERROR });

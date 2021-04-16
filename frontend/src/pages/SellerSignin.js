@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { resetUserPassword, signinUser } from "../redux/actions/userActions";
+import { resetSellerPassword, signinSeller } from "../redux/actions/sellerAction";
 
 //Material-ui
 import TextField from "@material-ui/core/TextField";
@@ -27,16 +27,16 @@ const useStyles = makeStyles((theme) => ({
     width: "40%",
     margin: "10px",
     [theme.breakpoints.down("sm")]: {
-      width: "70%",
+      width: "55%",
     },
   },
   card: {
     textAlign: "center",
   },
   small: {
-    fontSize: 18,
+    fontSize: 20,
   },
-  cardGrid: {
+  mainCard: {
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
@@ -48,85 +48,72 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function UserSignin() {
+function SellerSignin() {
   const classes = useStyles();
+  const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [step, setStep] = useState(1);
   const [passEmail, setPassEmail] = useState("");
-  const [newPass, setNewPass] = useState("");
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const { loading, error, errorMsg, resetPassError } = useSelector((state) => state.user);
+  const { resetPassError, error, sellerLogin } = useSelector((state) => state.seller);
+  console.log("error state...", resetPassError);
 
-  console.log("error user...", error);
-  console.log("resetPassError...", resetPassError);
+  //check seller is loggedin or not
+  if (sellerLogin) history.push("/seller/dashboard");
 
   const handleSubmit = (e) => {
     e.preventDefault();
   };
 
-  const nextStep = () => {
-    setStep(step + 1);
-  };
-  const prevStep = () => {
-    setStep(step - 1);
-  };
-
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // });
+  useEffect(() => {
+    if (error) {
+      return toast.error(`${error}`, { position: "bottom-right" });
+    }
+  }, [error]);
 
   const handleLogin = () => {
     if (!email || !password) {
       return toast.error("All fields are compulsory...!", { position: "bottom-right" });
     }
 
-    /* Input validations */
     const mailFormate = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
     if (!email.match(mailFormate))
       return toast.error("Please enter valid email address", {
         position: "bottom-center",
       });
 
-    const userData = {
+    const sellerData = {
       email,
       password,
     };
-
-    dispatch(signinUser(userData, history));
+    dispatch(signinSeller(sellerData, history));
   };
+
+  const nextStep = () => setStep(step + 1);
+  const prevStep = () => setStep(step - 1);
 
   const handleResetPassword = () => {
     if (!passEmail) {
       return toast.error(`Email is required`, { position: "bottom-right" });
     }
 
-    if (resetPassError) {
-      return toast.error(`${resetPassError}`, { position: "bottom-right" });
-    }
-
-    dispatch(resetUserPassword(passEmail));
-    toast.error(`Please check your email to reset password`, { position: "bottom-right" });
-
-    setTimeout(() => {
-      history.push("/");
-    }, 4000);
+    dispatch(resetSellerPassword(passEmail, history));
   };
 
   return (
     <Grid container className={classes.form}>
-      <Grid item sm className={classes.cardGrid}>
+      <Grid item sm className={classes.mainCard}>
         <div className={classes.card}>
-          <br />
-          <br />
           {step === 1 && (
             <>
+              <br />
+              <br />
               <Typography variant="h3" className={classes.title}>
                 Login{" "}
                 <span role="img" aria-label="Pizza Emoji">
-                  😋
+                  🥧
                 </span>
               </Typography>
               <br />
@@ -156,7 +143,6 @@ function UserSignin() {
                 <br />
                 <small className={classes.small}>
                   <p onClick={nextStep} className={classes.para}>
-                    {" "}
                     Forgot password?{" "}
                   </p>
                 </small>
@@ -168,45 +154,44 @@ function UserSignin() {
                 <br />
                 <br />
                 <small className={classes.small}>
-                  New user? <Link to="/userSignup">Register here</Link>
+                  New restaurant ? Register <Link to="/sellerSignup">here</Link>
                 </small>
               </form>
             </>
           )}
           {step === 2 && (
-            <div>
-              <IconButton style={{ marginLeft: "50%" }}>
-                <KeyboardBackspaceIcon onClick={prevStep} />
-              </IconButton>
-              <Typography variant="h4" className={classes.title}>
-                Reset Password{" "}
-                {/* <span role="img" aria-label="Pizza Emoji">
-                
-                </span> */}
-              </Typography>
-              <form noValidate onSubmit={handleSubmit}>
-                <br />
-                <TextField
-                  id="email"
-                  className={classes.textField}
-                  name="email"
-                  label="Enter your email"
-                  variant="outlined"
-                  onChange={(e) => setPassEmail(e.target.value)}
-                  required
-                />{" "}
-                <br />
-                <br />
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  onClick={handleResetPassword}
-                >
-                  Send
-                </Button>
-              </form>
-            </div>
+            <>
+              <div>
+                <IconButton style={{ marginLeft: "50%" }}>
+                  <KeyboardBackspaceIcon onClick={prevStep} />
+                </IconButton>
+                <Typography variant="h4" className={classes.title}>
+                  Reset Password{" "}
+                </Typography>
+                <form noValidate onSubmit={handleSubmit}>
+                  <br />
+                  <TextField
+                    id="email"
+                    className={classes.textField}
+                    name="email"
+                    label="Enter your email"
+                    variant="outlined"
+                    onChange={(e) => setPassEmail(e.target.value)}
+                    required
+                  />{" "}
+                  <br />
+                  <br />
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    onClick={handleResetPassword}
+                  >
+                    Send
+                  </Button>
+                </form>
+              </div>
+            </>
           )}
         </div>
 
@@ -217,4 +202,4 @@ function UserSignin() {
   );
 }
 
-export default UserSignin;
+export default SellerSignin;

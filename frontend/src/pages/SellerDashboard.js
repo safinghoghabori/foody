@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { addItem, fetchRestaurant, fetchRestaurantSeller } from "../redux/actions/sellerAction";
-import SearchBar from "./SearchBar";
-import ItemDialog from "./ItemDialog";
+import SearchBar from "../components/SearchBar";
+import ItemDialog from "../components/ItemDialog";
 
 //toast
 import { toast, ToastContainer } from "react-toastify";
@@ -19,7 +20,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
 // Icons
-import ItemCard from "./ItemCard";
+import ItemCard from "../components/ItemCard";
 import { CLEAR_SELLER_ERROR } from "../redux/types";
 
 const useStyles = makeStyles((theme) => ({
@@ -104,7 +105,11 @@ function SellerDashboard() {
   });
 
   const dispatch = useDispatch();
-  const { error, restaurant, loading, items } = useSelector((state) => state.seller);
+  const history = useHistory();
+  const { error, restaurant, loading, items, sellerLogin } = useSelector((state) => state.seller);
+
+  //check seller is loggedin or not
+  if (!sellerLogin) history.push("/");
 
   // const { items } = restaurant; //destructuring object(to get items array)
   const restId = restaurant._id;

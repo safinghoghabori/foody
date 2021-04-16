@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteItem, fetchRestaurants } from "../redux/actions/sellerAction";
 
-import rest1 from "../images/rest1.jpg";
-
 //Material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -93,14 +91,7 @@ function RestaurantCard(props) {
 
   return (
     <Grid container justify="center">
-      <Grid
-        container
-        direction="row"
-        justify="flex-start"
-        spacing={3}
-        className={classes.rootGrid}
-        // xs={12}
-      >
+      <Grid container direction="row" justify="flex-start" spacing={3} className={classes.rootGrid}>
         {loading ? (
           <div className={classes.spinner}>
             <HashLoader size={80} color="#3f51b5" />
@@ -127,7 +118,7 @@ function RestaurantCard(props) {
                 {isAdmin ? (
                   <Button
                     variant="contained"
-                    style={{ background: "rgb(67 96 138)", color: "white" }}
+                    style={{ background: "rgb(67 96 138)", color: "white", borderRadius: 0 }}
                     className={classes.btn}
                     onClick={() => handleDelete(rest._id)}
                   >
@@ -137,7 +128,7 @@ function RestaurantCard(props) {
                   <Link to={`/restaurant/${rest._id}`} className={classes.link}>
                     <Button
                       variant="contained"
-                      style={{ background: "rgb(67 96 138)", color: "white" }}
+                      style={{ background: "rgb(67 96 138)", color: "white", borderRadius: 0 }}
                       className={classes.btn}
                     >
                       ORDER ONLINE

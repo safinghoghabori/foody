@@ -3,6 +3,8 @@ import {
   DELETE_REST_FAIL,
   DELETE_REST_SUCCESS,
   LOADING_ADMIN_UI,
+  LOGOUT_ADMIN,
+  SET_ADMIN,
   SET_ADMIN_ERROR,
   SET_ALL_RESTAURANTS,
 } from "../types";
@@ -12,10 +14,17 @@ const initialState = {
   deleteSuccess: false,
   error: "",
   loading: false,
+  adminLogin: false,
 };
 
 export const adminReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_ADMIN: {
+      return {
+        ...state,
+        adminLogin: true,
+      };
+    }
     case SET_ALL_RESTAURANTS: {
       return {
         ...state,
@@ -35,6 +44,9 @@ export const adminReducer = (state = initialState, action) => {
         deleteSuccess: true,
         allRestaurants: state.allRestaurants.filter((rest) => rest._id !== action.payload),
       };
+    }
+    case LOGOUT_ADMIN: {
+      return initialState;
     }
     case DELETE_REST_FAIL: {
       return {

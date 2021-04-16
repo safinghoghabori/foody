@@ -4,10 +4,6 @@ import { useSelector } from "react-redux";
 
 //material-ui
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   footerContainer: {
@@ -47,6 +43,8 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "1.5rem",
     color: "rgb(105,105,105)",
     margin: "0.5rem 0px",
+    display: "block",
+    textDecoration: "none",
     "&:hover": {
       color: "black",
       cursor: "pointer",
@@ -82,6 +80,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Footer() {
   const classes = useStyles();
+
+  const { userLogin } = useSelector((state) => state.user);
+  const { sellerLogin } = useSelector((state) => state.seller);
+
+  const adminLogin = localStorage.getItem(JSON.stringify("admin"));
+
   return (
     <>
       <section className={classes.footerContainer}>
@@ -99,22 +103,75 @@ export default function Footer() {
                   <p className={classes.linksSubTitle}>Contact</p>
                 </nav>
               </div>
-              <div className={classes.links}>
-                <h6 className={classes.linksMainTitle}>FOR FOODIES</h6>
-                <nav>
-                  <p className={classes.linksSubTitle}>Login</p>
-                  <p className={classes.linksSubTitle}>Signup</p>
-                  <p className={classes.linksSubTitle}>Community</p>
-                  <p className={classes.linksSubTitle}>Help</p>
-                </nav>
-              </div>
-              <div className={classes.links}>
-                <h6 className={classes.linksMainTitle}>FOR RESTAURANTS</h6>
-                <nav>
-                  <p className={classes.linksSubTitle}>Add Restaurant</p>
-                  <p className={classes.linksSubTitle}>Login</p>
-                </nav>
-              </div>
+              {userLogin ? (
+                <div className={classes.links}>
+                  <h6 className={classes.linksMainTitle}>FOR FOODIES</h6>
+                  <nav>
+                    <Link to="/" className={classes.linksSubTitle}>
+                      Home
+                    </Link>
+                    <Link to="/orders" className={classes.linksSubTitle}>
+                      Orders
+                    </Link>
+                    <Link to="/cart" className={classes.linksSubTitle}>
+                      Cart
+                    </Link>
+                    <Link to="/userLogout" className={classes.linksSubTitle}>
+                      Logout
+                    </Link>
+                    <p className={classes.linksSubTitle}>Community</p>
+                    <p className={classes.linksSubTitle}>Help</p>
+                  </nav>
+                </div>
+              ) : (
+                !userLogin &&
+                !sellerLogin && (
+                  <div className={classes.links}>
+                    <h6 className={classes.linksMainTitle}>FOR FOODIES</h6>
+                    <nav>
+                      <Link to="/userSignin" className={classes.linksSubTitle}>
+                        Login
+                      </Link>
+                      <Link to="/userSignup" className={classes.linksSubTitle}>
+                        Signup
+                      </Link>
+                      <p className={classes.linksSubTitle}>Community</p>
+                      <p className={classes.linksSubTitle}>Help</p>
+                    </nav>
+                  </div>
+                )
+              )}
+              {sellerLogin ? (
+                <div className={classes.links}>
+                  <h6 className={classes.linksMainTitle}>FOR RESTAURANTS</h6>
+                  <nav>
+                    <Link to="/seller/dashboard" className={classes.linksSubTitle}>
+                      Dashboard
+                    </Link>
+                    <Link to="/orders" className={classes.linksSubTitle}>
+                      Orders
+                    </Link>{" "}
+                    <Link to="/userLogout" className={classes.linksSubTitle}>
+                      Logout
+                    </Link>
+                  </nav>
+                </div>
+              ) : (
+                !sellerLogin &&
+                !userLogin && (
+                  <div className={classes.links}>
+                    <h6 className={classes.linksMainTitle}>FOR RESTAURANTS</h6>
+                    <nav>
+                      <Link to="/sellerSignup" className={classes.linksSubTitle}>
+                        Add Restaurant
+                      </Link>
+                      <Link to="/sellerSignin" className={classes.linksSubTitle}>
+                        Login
+                      </Link>
+                    </nav>
+                  </div>
+                )
+              )}
               <div className={classes.links}>
                 <h6 className={classes.linksMainTitle}>NEWSLATTER</h6>
                 <p className={classes.linksSubTitle}>Stay updated with new offers from us</p>

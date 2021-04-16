@@ -65,6 +65,7 @@ function Navbar() {
   const dispatch = useDispatch();
   const { userLogin, firstname } = useSelector((state) => state.user);
   const { sellerLogin, restaurantname } = useSelector((state) => state.seller);
+  const { adminLogin } = useSelector((state) => state.admin);
 
   const handleMobileDrawerOpen = () => {
     setIsMobileDrawerOpen(true);
@@ -82,7 +83,7 @@ function Navbar() {
         icon: <ShoppingCartOutlinedIcon className="text-white" />,
       },
       {
-        link: "/userLogout",
+        link: "/logout",
         name: "Logout",
         icon: <ExitToAppIcon className="text-white" />,
       },
@@ -113,7 +114,16 @@ function Navbar() {
         icon: <DashboardIcon className="text-white" />,
       },
       {
-        link: "/userLogout",
+        link: "/logout",
+        name: "Logout",
+        icon: <ExitToAppIcon className="text-white" />,
+      },
+    ];
+  }
+  if (adminLogin) {
+    menuItems = [
+      {
+        link: "/logout",
         name: "Logout",
         icon: <ExitToAppIcon className="text-white" />,
       },

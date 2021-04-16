@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchRestaurant } from "../redux/actions/sellerAction";
 import { addToCart } from "../redux/actions/userActions";
-import SearchBar from "./SearchBar";
+import SearchBar from "../components/SearchBar";
 
 //toast
 import { toast, ToastContainer } from "react-toastify";
@@ -120,6 +120,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     margin: "15%",
   },
+  para: {
+    fontSize: "x-large",
+    marginLeft: "32%",
+  },
 }));
 
 function Restaurant() {
@@ -130,7 +134,6 @@ function Restaurant() {
   const dispatch = useDispatch();
 
   const { error, restaurantUser, loading } = useSelector((state) => state.seller);
-  console.log("restaurantUser...", restaurantUser);
 
   const { items } = restaurantUser; //object destructuring
 
@@ -147,8 +150,6 @@ function Restaurant() {
     setItemsState(items);
     setFilteredItemsState(items);
   }, [restaurantUser]);
-
-  console.log("fielteredItems ...", filteredItemsState);
 
   const handleAddToCart = (itemId) => {
     dispatch(addToCart(userId, itemId));
@@ -234,6 +235,9 @@ function Restaurant() {
 
             <div className={classes.cardItemsArea}>
               <Grid container spacing={2} style={{ marginTop: 40 }}>
+                {filteredItemsState && filteredItemsState.length === 0 && (
+                  <p className={classes.para}>No Items present.</p>
+                )}
                 {filteredItemsState &&
                   filteredItemsState.map((item, k) => (
                     <Grid item container xs={12} sm={6} md={4} justify="center" key={k}>

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   odId: {
-    lineBreak: "anywhere",
+    // lineBreak: "anywhere",
   },
 }));
 
@@ -76,15 +76,15 @@ function OrderCard(props) {
           </>
         )}
         <Divider />
-        {order.items.map((item) => (
-          <>
+        {order.items.map((item, k) => (
+          <div key={k}>
             <Typography gutterBottom variant="body1" color="textPrimary">
               <b>Item:</b> {item.item.title}
             </Typography>
             <Typography gutterBottom variant="body1" color="textPrimary">
               Rs. {item.item.price} x {item.qty}
             </Typography>
-          </>
+          </div>
         ))}
         <br />
         <Divider />
@@ -92,7 +92,7 @@ function OrderCard(props) {
           Total Price: {totalPrice}
         </Typography>
       </div>
-      <Typography size="small" className={classes.status} fullWidth>
+      <Typography size="small" className={classes.status}>
         Order Placed
       </Typography>
     </Paper>

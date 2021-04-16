@@ -1,22 +1,22 @@
-import HomeScreen from "./components/HomeScreen";
+import HomeScreen from "./pages/HomeScreen";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import UserSignup from "./components/UserSignup";
-import UserSignin from "./components/UserSignin";
+import Footer from "./pages/Footer";
+import UserSignup from "./pages/UserSignup";
+import UserSignin from "./pages/UserSignin";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import Logout from "./components/Logout";
-import Restaurant from "./components/Restaurant";
-import Cart from "./components/Cart";
-import Orders from "./components/Orders";
-import SellerSignup from "./components/SellerSignup";
-import SellerSignin from "./components/SellerSignin";
-import SellerDashboard from "./components/SellerDashboard";
-import NewUserPasswordForm from "./components/NewUserPasswordForm";
+import Logout from "./pages/Logout";
+import Restaurant from "./pages/Restaurant";
+import Cart from "./pages/Cart";
+import Orders from "./pages/Orders";
+import SellerSignup from "./pages/SellerSignup";
+import SellerSignin from "./pages/SellerSignin";
+import SellerDashboard from "./pages/SellerDashboard";
+import NewUserPasswordForm from "./pages/NewUserPasswordForm";
 import Login from "./components/Admin/Login";
 import AllRestaurants from "./components/Admin/AllRestaurants";
-import NewSellerPasswordForm from "./components/NewSellerPasswordForm";
+import NewSellerPasswordForm from "./pages/NewSellerPasswordForm";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 function App() {
@@ -39,7 +39,7 @@ function App() {
                 <UserSignin />
               </Route>
 
-              <Route path="/userLogout">
+              <Route path="/logout">
                 <Logout />
               </Route>
 

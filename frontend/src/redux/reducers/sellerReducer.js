@@ -92,13 +92,7 @@ export const sellerReducer = (state = initialState, action) => {
       };
     }
     case LOGOUT_SELLER: {
-      return {
-        ...state,
-        restaurant: {},
-        loading: false,
-        sellerLogin: false,
-        error: "",
-      };
+      return initialState;
     }
     case RESET_SELLER_PASS_SUCCESS: {
       return {

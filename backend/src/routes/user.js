@@ -146,7 +146,6 @@ router.post("/reset-user-password", async (req, res) => {
       `,
       html: `
         <h1>Hello, ${user.firstname} ${user.lastname}</h1>
-        <h3>Reset your password.</h3>
         <h3>Please click on below link to reset your password.</h3>
         <a href="http://localhost:3000/new-user-password/token=${resetPasswordToken}">Reset password...click here!</a>
       `,

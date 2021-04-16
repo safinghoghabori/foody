@@ -56,12 +56,15 @@ function SellerSignup() {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const { loading, error } = useSelector((state) => state.seller);
+  const { loading, error, sellerLogin } = useSelector((state) => state.seller);
 
   const handleImage = (e) => {
     const uploadedFile = e.target.files[0]; // CAN ALSO WRITE const [uploadedFile] = e.target.files[0] //Array Destructuring
     setImage(uploadedFile);
   };
+
+  //check seller is loggedin or not
+  if (sellerLogin) history.push("/seller/dashboard");
 
   const handleSubmit = (e) => {
     e.preventDefault();

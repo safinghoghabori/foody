@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import OrderCard from "./OrderCard";
+import { useHistory } from "react-router-dom";
+import OrderCard from "../components/OrderCard";
 
 //Material-ui
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -49,10 +50,15 @@ function Orders() {
   const classes = useStyles();
 
   const dispatch = useDispatch();
-  const { orders, userId, role, loading, isTransactionSuccess } = useSelector(
+  const history = useHistory();
+
+  const { orders, userId, role, loading, isTransactionSuccess, userLogin } = useSelector(
     (state) => state.user
   );
-  const { selId } = useSelector((state) => state.seller);
+  const { selId, sellerLogin } = useSelector((state) => state.seller);
+
+  // Check user or seller is logged in or not
+  if (!userLogin && !sellerLogin) history.push("/");
 
   useEffect(() => {
     if (role === "user") {
@@ -79,7 +85,7 @@ function Orders() {
         <Grid item container direction="row" className={classes.cardMain}>
           <Grid item xs={12} sm={1} />
           <Grid item xs={12} sm={10}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} style={{ lineBreak: "anywhere" }}>
               {orders ? (
                 orders.length > 0 ? (
                   orders.map((order) => (
