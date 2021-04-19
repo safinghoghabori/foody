@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "2px",
   },
   subsBtn: {
-    background: "rgb(67, 96, 138);",
+    background: "rgb(63 81 181);",
     color: "white",
     border: 0,
     padding: "5px",
@@ -90,7 +90,9 @@ export default function Footer() {
     <>
       <section className={classes.footerContainer}>
         <div className={classes.footer}>
-          <div className={classes.mainTitle}>FOODY</div>
+          <div className={classes.mainTitle} style={{ color: "#3f51b5" }}>
+            FOODY
+          </div>
           <div className={classes.otherLinks}>
             <div className={classes.otherLinksArea}>
               <div className={classes.links}>
@@ -100,7 +102,9 @@ export default function Footer() {
                   <p className={classes.linksSubTitle}>Blog</p>
                   <p className={classes.linksSubTitle}>Careers</p>
                   <p className={classes.linksSubTitle}>Report Fraude</p>
-                  <p className={classes.linksSubTitle}>Contact</p>
+                  <Link to="/contact" className={classes.linksSubTitle}>
+                    Contact
+                  </Link>
                 </nav>
               </div>
               {userLogin ? (

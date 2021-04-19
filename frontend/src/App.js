@@ -18,6 +18,7 @@ import Login from "./components/Admin/Login";
 import AllRestaurants from "./components/Admin/AllRestaurants";
 import NewSellerPasswordForm from "./pages/NewSellerPasswordForm";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -41,6 +42,10 @@ function App() {
 
               <Route path="/logout">
                 <Logout />
+              </Route>
+
+              <Route path="/contact">
+                <Contact />
               </Route>
 
               <Route path="/restaurant/:id">
