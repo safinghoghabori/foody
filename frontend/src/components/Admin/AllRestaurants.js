@@ -29,8 +29,6 @@ function AllRestaurants() {
   const [restaurantsState, setRestaurantsState] = useState(allRestaurants ? [] : null);
   const [filteredRestsState, setFilteredRestsState] = useState(allRestaurants ? [] : null);
 
-  console.log(adminLogin);
-
   //check admin is login or not
   if (!adminLogin) {
     history.push("/admin/login");

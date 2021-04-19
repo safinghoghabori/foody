@@ -119,17 +119,19 @@ function HomeScreen() {
   const history = useHistory();
 
   const { restaurants, sellerLogin } = useSelector((state) => state.seller);
+  const { adminLogin } = useSelector((state) => state.admin);
 
   const [restaurantsState, setRestaurantsState] = useState(restaurants ? [] : null);
   const [filteredRestsState, setFilteredRestsState] = useState(restaurants ? [] : null);
 
   //redirect seller
   if (sellerLogin) history.push("/seller/dashboard");
+  if (adminLogin) history.push("/admin/allRestaurants");
 
   useEffect(() => {
     setRestaurantsState(restaurants);
     setFilteredRestsState(restaurants);
-  }, []);
+  }, [restaurants]);
 
   const handleSearch = (value) => {
     //variable to hold the original value of the list
@@ -156,6 +158,7 @@ function HomeScreen() {
     //set filtered state based on what we get above
     setFilteredRestsState(newList);
   };
+
   return (
     <>
       <section className={classes.headerArea}>

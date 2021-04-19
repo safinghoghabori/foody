@@ -37,6 +37,10 @@ export const deleteRestaurant = (id) => (dispatch) => {
         type: DELETE_REST_SUCCESS,
         payload: id,
       });
+      // dispatch({
+      //   type: DELETE_SELLER_REST,
+      //   payload: id,
+      // });
     })
     .catch((error) => {
       console.log(error.response);

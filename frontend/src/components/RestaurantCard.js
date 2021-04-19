@@ -1,15 +1,12 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteItem, fetchRestaurants } from "../redux/actions/sellerAction";
+import { fetchRestaurants } from "../redux/actions/sellerAction";
 
 //Material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -66,6 +63,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     margin: "15%",
   },
+  para: {
+    fontSize: 20,
+    marginTop: "20px",
+    // marginLeft: "32%",
+  },
 }));
 
 function RestaurantCard(props) {
@@ -96,6 +98,8 @@ function RestaurantCard(props) {
           <div className={classes.spinner}>
             <HashLoader size={80} color="#3f51b5" />
           </div>
+        ) : rests.length === 0 ? (
+          <p className={classes.para}>No restaurants present.</p>
         ) : (
           rests.map((rest, k) => (
             <Grid item className={classes.cardGrid} key={k}>

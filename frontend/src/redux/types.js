@@ -34,6 +34,7 @@ export const EDIT_ITEM = "EDIT_ITEM";
 export const LOGOUT_SELLER = "LOGOUT_SELLER";
 export const RESET_SELLER_PASS_SUCCESS = "RESET_SELLER_PASS_SUCCESS";
 export const RESET_SELLER_PASS_ERROR = "RESET_SELLER_PASS_ERROR";
+export const DELETE_SELLER_REST = "DELETE_SELLER_REST";
 
 //admin reducer
 export const SET_ADMIN = "SET_ADMIN";

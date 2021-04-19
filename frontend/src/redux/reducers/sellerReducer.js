@@ -106,6 +106,13 @@ export const sellerReducer = (state = initialState, action) => {
         resetPassError: action.payload,
       };
     }
+    // case DELETE_SELLER_REST: {
+    //   const newRest = state.restaurant._id === action.payload ? {} : state.restaurant;
+    //   return {
+    //     ...state,
+    //     restaurant: newRest,
+    //   };
+    // }
 
     //common cases
     case LOADING_SELLER_UI: {

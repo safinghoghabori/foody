@@ -103,7 +103,7 @@ export const signupSeller = (newSellerData, history) => (dispatch) => {
     .catch((error) => {
       dispatch({
         type: SET_SELLER_ERROR,
-        payload: error.response.data,
+        payload: error.response.data.error,
       });
     });
 };

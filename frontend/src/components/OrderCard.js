@@ -2,7 +2,6 @@ import React from "react";
 import { useDispatch } from "react-redux";
 
 //Material-ui
-import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -14,9 +13,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgb(62 59 59 / 87%)",
     color: "#ffffff",
     textAlign: "center",
-  },
-  odId: {
-    // lineBreak: "anywhere",
   },
 }));
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { addItem, fetchRestaurant, fetchRestaurantSeller } from "../redux/actions/sellerAction";
+import { addItem, fetchRestaurantSeller } from "../redux/actions/sellerAction";
 import SearchBar from "../components/SearchBar";
 import ItemDialog from "../components/ItemDialog";
 
@@ -21,7 +21,6 @@ import Button from "@material-ui/core/Button";
 
 // Icons
 import ItemCard from "../components/ItemCard";
-import { CLEAR_SELLER_ERROR } from "../redux/types";
 
 const useStyles = makeStyles((theme) => ({
   root: {

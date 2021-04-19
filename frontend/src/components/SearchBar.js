@@ -1,11 +1,8 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import searchIcon from "../images/searchIcon.png";
 
 //Material-ui
-import { Divider, IconButton, Paper } from "@material-ui/core";
-import { MyLocation } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
