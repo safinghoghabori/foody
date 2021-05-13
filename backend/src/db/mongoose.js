@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const { MONGOURI } = require("../../keys");
 
-mongoose.connect(MONGOURI, {
+mongoose.connect(process.env.MONGOURI, {
   useCreateIndex: true,
   useUnifiedTopology: true,
   useNewUrlParser: true,

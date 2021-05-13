@@ -188,12 +188,12 @@ router.post("/reset-seller-password", async (req, res) => {
       text: `
         Hello, reset your password.
         Please copy and paste the address below to reset your password.
-        http://localhost:3000/new-seller-password/token=${resetPasswordToken}
+        /new-seller-password/token=${resetPasswordToken}
       `,
       html: `
         <h1>Hello, ${seller.restaurantname}</h1>
         <h5>Please click on below link to reset your password.</h5>
-        <h6><a href="http://localhost:3000/new-seller-password/token=${resetPasswordToken}">Reset password...click here!</a><h6>
+        <h6><a href="/new-seller-password/token=${resetPasswordToken}">Reset password...click here!</a><h6>
       `,
     };
     try {

@@ -104,7 +104,7 @@ router.post("/paytm/callback", (req, res) => {
           var _result = JSON.parse(response);
           console.log("_result...", _result);
           if (_result.STATUS == "TXN_SUCCESS") {
-            res.redirect("http://localhost:3000/orders");
+            res.redirect("/orders");
           } else {
             res.status(400).send("payment failed");
           }
