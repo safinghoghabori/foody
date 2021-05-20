@@ -151,7 +151,7 @@ function ItemCart(props) {
             </div>
           </div>
           <div className={classes.cardImg}>
-            <img src={image} className={classes.cover} />
+            <img src={`/${image}`} className={classes.cover} />
           </div>
         </Card>
       </Grid>
