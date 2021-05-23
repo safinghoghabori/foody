@@ -1,5 +1,7 @@
 <h1 align="center">Foody</h1>
 
+![foody-webapp herokuapp com_(Desktop)](https://user-images.githubusercontent.com/51900017/119257563-6a47e900-bbe3-11eb-9186-159cac40a830.png)
+
 <h1>➡️ About the project</h1>
 
 <h3>It's an online food ordering website built using MERN stack. In this website user can purchase food and can order online through credit card, debit card, paytm etc. While Seller can add their restaurant and add items and manage them. While there is admin of application who can view all restaurants and delete them.</h3>
