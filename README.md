@@ -63,4 +63,4 @@ Run follwing three commands alternatively:
 Now head over to "localhost:5000" in browser.
 
 <h1>➡️ Live Demo</h1>
-<ul><li><h3><a href="https://foody-webapp.herokuapp.com/" target="_blank">Foody</a></h3></li></ul>
+<ul><li><h3><a href="#" target="_blank">Foody</a></h3></li></ul>
