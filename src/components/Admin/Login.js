@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-//require dotenv
-require("dotenv").config();
-
 //Material-ui
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -16,6 +13,9 @@ import Button from "@material-ui/core/Button";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SET_ADMIN } from "../../redux/types";
+
+//require dotenv
+require("dotenv").config();
 
 const useStyles = makeStyles((theme) => ({
   root: {
