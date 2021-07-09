@@ -259,7 +259,7 @@ function SellerSignup() {
             </Button>
             <br />
             <small className={classes.small}>
-              Already have an account ? Login <Link to="/sellerSignin">here</Link>
+              Already have an account ? <Link to="/sellerSignin">Login here</Link>
             </small>
           </form>
         </div>

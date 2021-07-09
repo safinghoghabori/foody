@@ -5,6 +5,8 @@ backend/node_modules
 /backend/.env
 /backend/keys.js
 
+.env
+
 # /.pnp
 # .pnp.js
 

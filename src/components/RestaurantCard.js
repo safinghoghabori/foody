@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
       height: "310px",
       width: "325px",
     },
+    "@media (max-width: 350px)":{
+      width:"100%"
+    }
   },
   link: {
     textDecoration: "none",

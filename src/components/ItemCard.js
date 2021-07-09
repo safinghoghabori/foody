@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   cover: {
-    width: "100%",
     height: 200,
   },
   cardImg: {
@@ -130,13 +129,13 @@ function ItemCart(props) {
         <Card className={classes.root}>
           <div className={classes.details}>
             <CardContent className={classes.content}>
-              <Typography component="h5" variant="h5">
+              <Typography component="h5" variant="h5" style={{textTransform:'capitalize'}}>
                 {title}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
                 Rs. {price}
               </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
+              <Typography variant="subtitle1" color="textSecondary"  style={{textTransform:'capitalize'}}>
                 {description}
               </Typography>
             </CardContent>

@@ -47,7 +47,7 @@ export const fetchRestaurant = (restId) => (dispatch) => {
   dispatch({ type: LOADING_SELLER_UI });
 
   axios
-    .get(`/restaurant/${restId}`)
+    .get(`/api/restaurant/${restId}`)
     .then((res) => {
       dispatch({
         type: SET_RESTAURANT_USER,
@@ -67,7 +67,7 @@ export const fetchRestaurantSeller = (restId) => (dispatch) => {
   dispatch({ type: LOADING_SELLER_UI });
 
   axios
-    .get(`/restaurant/${restId}`)
+    .get(`/api/restaurant/${restId}`)
     .then((res) => {
       dispatch({
         type: SET_RESTAURANT,

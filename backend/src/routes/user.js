@@ -333,7 +333,7 @@ router.get("/restaurants", async (req, res) => {
   }
 });
 
-router.get("/restaurant/:selId", async (req, res) => {
+router.get("/api/restaurant/:selId", async (req, res) => {
   try {
     const selId = req.params.selId;
     const restaurant = await Seller.findById(selId).select("-password").populate("items");

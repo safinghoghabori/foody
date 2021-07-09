@@ -65,6 +65,9 @@ const useStyles = makeStyles((theme) => ({
       margin: 0,
       lineHeight: "70px",
     },
+    "@media (max-width: 340px)":{
+      fontSize: 32,
+    }
   },
   introduction: {
     flex: 1,

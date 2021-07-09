@@ -62,9 +62,12 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
       maxWidth: "40.3333%",
     },
+    "@media (max-width: 384px)":{
+      maxWidth:"100%"
+    }
   },
   newslatterInput: {
-    width: "100%",
+    display:'block',
     background: "#e8ede1",
     border: "1px solid dimgrey",
     borderRadius: "2px",

@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+//require dotenv
+require("dotenv").config();
+
 //Material-ui
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -68,7 +71,7 @@ function Login() {
       return toast.error("All fields are compulsory...!", { position: "bottom-right" });
     }
 
-    if (email === "safinghoghabori65@gmail.com" && password === "ssccssafin") {
+    if (email === process.env.ADMIN_ID && password === process.env.ADMIN_PASSWORD) {
       const userData = {
         email,
         password,

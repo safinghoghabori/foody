@@ -154,7 +154,7 @@ function SellerSignin() {
                 <br />
                 <br />
                 <small className={classes.small}>
-                  New restaurant ? Register <Link to="/sellerSignup">here</Link>
+                  New restaurant ? <Link to="/sellerSignup">Register here</Link>
                 </small>
               </form>
             </>

@@ -130,7 +130,7 @@ function UserSignup() {
             <TextField
               id="firstname"
               name="firstname"
-              label="Firstname"
+              label="First Name"
               variant="outlined"
               className={classes.textField}
               onChange={(e) => setFirstname(e.target.value)}
@@ -141,7 +141,7 @@ function UserSignup() {
               id="lastname"
               className={classes.textField}
               name="lastname"
-              label="Lirstname"
+              label="Last Name"
               variant="outlined"
               onChange={(e) => setLastname(e.target.value)}
               required

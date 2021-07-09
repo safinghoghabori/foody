@@ -208,7 +208,7 @@ function Restaurant() {
                   {restaurantUser.tags}
                 </Typography>
                 <br />
-                <Typography variant="body2" color="textPrimary">
+                <Typography variant="body2" color="textPrimary" style={{textTransform:'capitalize'}}>
                   Adress: {restaurantUser.address}
                 </Typography>
                 <Typography variant="body2" color="textPrimary">
