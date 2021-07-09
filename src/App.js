@@ -20,6 +20,9 @@ import NewSellerPasswordForm from "./pages/NewSellerPasswordForm";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import Contact from "./pages/Contact";
 
+//require dotenv
+require("dotenv").config();
+
 function App() {
   return (
     <>

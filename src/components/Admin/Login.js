@@ -14,9 +14,6 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SET_ADMIN } from "../../redux/types";
 
-//require dotenv
-require("dotenv").config();
-
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
@@ -71,7 +68,7 @@ function Login() {
       return toast.error("All fields are compulsory...!", { position: "bottom-right" });
     }
 
-    if (email === process.env.ADMIN_ID && password === process.env.ADMIN_PASSWORD) {
+    if (email === process.env.REACT_APP_ADMIN_ID && password === process.env.REACT_APP_ADMIN_PASSWORD) {
       const userData = {
         email,
         password,
