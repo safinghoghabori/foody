@@ -18,8 +18,17 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 router.post("/signup", async (req, res) => {
   console.log(req.body);
   try {
-    const { firstname, lastname, email, password, address, state, city } = req.body;
-    if (!firstname || !lastname || !email || !password || !address || !state || !city) {
+    const { firstname, lastname, email, password, address, state, city } =
+      req.body;
+    if (
+      !firstname ||
+      !lastname ||
+      !email ||
+      !password ||
+      !address ||
+      !state ||
+      !city
+    ) {
       return res.status(404).send({ error: "All fields are required...!" });
     }
 
@@ -50,10 +59,15 @@ router.post("/signup", async (req, res) => {
         http://${req.headers.host}/verify-user-email?token=${emailToken}
       `,
       html: `
-        <h1>Hello, ${firstname} ${lastname}</h1>
-        <h3>thanks for registering on our site.</h3>
-        <h3>Please click on below link to verify your account.</h3>
-        <a href="http://${req.headers.host}/verify-user-email?token=${emailToken}">Verify your account...click here!</a>
+      <p>Hello ${firstname},</p>
+      <p>Thank you for registering on our site. Order online your favourite food without even leaving your place.</p>
+      <p>Please click on the below link to verify your account.
+      <a href="http://${req.headers.host}/verify-user-email?token=${emailToken}" target="_blank">Click here!</a></p><br/>
+      <p>Have great food forever!</p>
+      <p><br /><br /></p>
+      <p>Best regards,</p>
+      <p>Team Foody</p>
+      <p>Bhavnagar, Gujarat.</p>
       `,
     };
     try {
@@ -65,7 +79,9 @@ router.post("/signup", async (req, res) => {
     //save user into database
     await user.save(req.body);
     // res.send(user);
-    res.status(200).send({ msg: "Please check your email to verify your account" });
+    res
+      .status(200)
+      .send({ msg: "Please check your email to verify your account" });
   } catch (error) {
     //throw error if email already exists
     if (error.keyValue) {
@@ -108,7 +124,9 @@ router.post("/signin", async (req, res) => {
 
     //check if user is verified or not(verify his account by checking email or not)
     if (!user.isVerified) {
-      return res.status(404).send({ error: "Please verify your account and try again...!" });
+      return res
+        .status(404)
+        .send({ error: "Please verify your account and try again...!" });
     }
 
     //if success
@@ -125,7 +143,9 @@ router.post("/reset-user-password", async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).send({ error: "User doesn't exist with this email...!" });
+      return res
+        .status(404)
+        .send({ error: "User doesn't exist with this email...!" });
     }
 
     const resetPasswordToken = crypto.randomBytes(64).toString("hex");
@@ -142,12 +162,16 @@ router.post("/reset-user-password", async (req, res) => {
       text: `
         Hello, reset your password.
         Please copy and paste the address below to reset your password.
-        /new-user-password/token=${resetPasswordToken}
+        http://${req.headers.host}/new-user-password/token=${resetPasswordToken}
       `,
       html: `
-        <h1>Hello, ${user.firstname} ${user.lastname}</h1>
-        <h3>Please click on below link to reset your password.</h3>
-        <a href="/new-user-password/token=${resetPasswordToken}">Reset password...click here!</a>
+      <p>Hello ${user.firstname},</p>
+      <p>Please click on the below link to reset your password 
+            <a href="http://${req.headers.host}/new-user-password/token=${resetPasswordToken}" target="_blank">click here!</a></p>
+          <p><br /><br /></p>
+          <p>Best regards,</p>
+          <p>Team Foody</p>
+          <p>Bhavnagar, Gujarat.</p>
       `,
     };
     try {
@@ -176,7 +200,9 @@ router.post("/new-user-password", async (req, res) => {
     });
     console.log(user);
     if (!user) {
-      return res.status(404).send({ error: "Try again! Session has already expired...!" });
+      return res
+        .status(404)
+        .send({ error: "Try again! Session has already expired...!" });
     }
 
     user.password = newPassword;
@@ -187,7 +213,9 @@ router.post("/new-user-password", async (req, res) => {
     res.status(200).send({ msg: "Password updated successfully...!" });
   } catch (error) {
     console.log(error);
-    res.status(404).send({ error: "Can't reset password, something went wrong...!" });
+    res
+      .status(404)
+      .send({ error: "Can't reset password, something went wrong...!" });
   }
 });
 
@@ -216,7 +244,9 @@ router.post("/add-to-cart/:userId", async (req, res) => {
 
     res.status(200).send({ msg: "Item added to cart successfully...!", item });
   } catch (error) {
-    res.status(404).send({ error: "Item can't be added...something went wrong!" });
+    res
+      .status(404)
+      .send({ error: "Item can't be added...something went wrong!" });
   }
 });
 
@@ -261,7 +291,9 @@ router.post("/reduce-cart-item/:userId", async (req, res) => {
 
     res.status(200).send({ msg: "Item successfully reduced from cart...!" });
   } catch (error) {
-    res.status(404).send({ error: "Could not reduce cart item...something went wrong" });
+    res
+      .status(404)
+      .send({ error: "Could not reduce cart item...something went wrong" });
   }
 });
 
@@ -279,7 +311,9 @@ router.post("/delete-cart-item/:userId", async (req, res) => {
 
     res.status(200).send({ msg: "Item successfully removed from cart...!" });
   } catch (error) {
-    res.status(404).send({ error: "Could not delete cart item...something went wrong" });
+    res
+      .status(404)
+      .send({ error: "Could not delete cart item...something went wrong" });
   }
 });
 
@@ -329,14 +363,18 @@ router.get("/restaurants", async (req, res) => {
       res.status(200).send(restaurants);
     }
   } catch (error) {
-    res.status(400).send({ error: "Could not find restaurants...something went wrong!" });
+    res
+      .status(400)
+      .send({ error: "Could not find restaurants...something went wrong!" });
   }
 });
 
 router.get("/api/restaurant/:selId", async (req, res) => {
   try {
     const selId = req.params.selId;
-    const restaurant = await Seller.findById(selId).select("-password").populate("items");
+    const restaurant = await Seller.findById(selId)
+      .select("-password")
+      .populate("items");
 
     if (!restaurant) {
       res.status(400).send({ error: "No restaurant available...!" });
@@ -344,7 +382,9 @@ router.get("/api/restaurant/:selId", async (req, res) => {
       res.status(200).send(restaurant);
     }
   } catch (error) {
-    res.status(400).send({ error: "Could not find restaurant...something went wrong!" });
+    res
+      .status(400)
+      .send({ error: "Could not find restaurant...something went wrong!" });
   }
 });
 

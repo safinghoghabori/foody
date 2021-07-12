@@ -22,7 +22,10 @@ const fileStorage = multer.diskStorage({
     cb(null, "./uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, Math.floor(Math.random() * 90000) + 10000 + "-" + file.originalname);
+    cb(
+      null,
+      Math.floor(Math.random() * 90000) + 10000 + "-" + file.originalname
+    );
   },
 });
 
@@ -48,7 +51,16 @@ router.post("/sellerSignup", upload.single("restImage"), async (req, res) => {
   console.log(req.body.restaurantname);
 
   try {
-    const { tags, restaurantname, email, password, address, state, city, phoneno } = req.body;
+    const {
+      tags,
+      restaurantname,
+      email,
+      password,
+      address,
+      state,
+      city,
+      phoneno,
+    } = req.body;
 
     if (
       !email ||
@@ -60,7 +72,16 @@ router.post("/sellerSignup", upload.single("restImage"), async (req, res) => {
       !restaurantname ||
       !phoneno
     ) {
-      console.log(tags, restaurantname, email, password, city, state, address, phoneno);
+      console.log(
+        tags,
+        restaurantname,
+        email,
+        password,
+        city,
+        state,
+        address,
+        phoneno
+      );
       return res.status(404).send({ error: "All fields are required...!" });
     }
 
@@ -97,10 +118,15 @@ router.post("/sellerSignup", upload.single("restImage"), async (req, res) => {
         http://${req.headers.host}/verify-seller-email?token=${emailToken}
       `,
       html: `
-        <h1>Hello, ${restaurantname}</h1>
-        <h5>thanks for registering on our site.</h5>
-        <h5>Please click on below link to verify your account.</h5>
-        <h6><a href="http://${req.headers.host}/verify-seller-email?token=${emailToken}">Verify your account...click here!</a></h6>
+      <p>Hello ${restaurantname},</p>
+      <p>Thank you for registering on our site. Take orders from customers online and grow your business with us.</p>
+      <p>Please click on the below link to verify your account.
+      <a href="http://${req.headers.host}/verify-seller-email?token=${emailToken}" target="_blank">Click here!</a></p><br/>
+      <p>Have great food forever!</p>
+      <p><br /><br /></p>
+      <p>Best regards,</p>
+      <p>Team Foody</p>
+      <p>Bhavnagar, Gujarat.</p>
       `,
     };
     try {
@@ -147,14 +173,18 @@ router.post("/sellerSignin", async (req, res) => {
     }
 
     //find seller by his email & password
-    const seller = await Seller.findOne({ email, password }).select("-password");
+    const seller = await Seller.findOne({ email, password }).select(
+      "-password"
+    );
     if (!seller) {
       return res.status(404).send({ error: "Invalid email or password...!" });
     }
 
     //check if seller is verified or not(verify his account by checking email or not)
     if (!seller.isVerified) {
-      return res.status(404).send({ error: "Please verify your account and try again...!" });
+      return res
+        .status(404)
+        .send({ error: "Please verify your account and try again...!" });
     }
 
     //if success
@@ -171,7 +201,9 @@ router.post("/reset-seller-password", async (req, res) => {
 
     const seller = await Seller.findOne({ email });
     if (!seller) {
-      return res.status(404).send({ error: "User doesn't exist with this email...!" });
+      return res
+        .status(404)
+        .send({ error: "User doesn't exist with this email...!" });
     }
 
     const resetPasswordToken = crypto.randomBytes(64).toString("hex");
@@ -188,12 +220,16 @@ router.post("/reset-seller-password", async (req, res) => {
       text: `
         Hello, reset your password.
         Please copy and paste the address below to reset your password.
-        /new-seller-password/token=${resetPasswordToken}
+        http://${req.headers.host}/new-seller-password/token=${resetPasswordToken}
       `,
       html: `
-        <h1>Hello, ${seller.restaurantname}</h1>
-        <h5>Please click on below link to reset your password.</h5>
-        <h6><a href="/new-seller-password/token=${resetPasswordToken}">Reset password...click here!</a><h6>
+      <p>Hello ${seller.restaurantname},</p>
+      <p>Please click on the below link to reset your password 
+            <a href="http://${req.headers.host}/new-seller-password/token=${resetPasswordToken}" target="_blank">click here!</a></p>
+          <p><br /><br /></p>
+          <p>Best regards,</p>
+          <p>Team Foody</p>
+          <p>Bhavnagar, Gujarat.</p>
       `,
     };
     try {
@@ -222,7 +258,9 @@ router.post("/new-seller-password", async (req, res) => {
     });
     console.log(seller);
     if (!seller) {
-      return res.status(404).send({ error: "Try again! Session has already expired...!" });
+      return res
+        .status(404)
+        .send({ error: "Try again! Session has already expired...!" });
     }
 
     seller.password = newPassword;
@@ -233,7 +271,9 @@ router.post("/new-seller-password", async (req, res) => {
     res.status(200).send({ msg: "Password updated successfully...!" });
   } catch (error) {
     console.log(error);
-    res.status(404).send({ error: "Can't reset password, something went wrong...!" });
+    res
+      .status(404)
+      .send({ error: "Can't reset password, something went wrong...!" });
   }
 });
 
